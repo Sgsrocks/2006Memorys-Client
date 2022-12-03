@@ -112,9 +112,9 @@ public final class Sprite extends DrawingArea {
 	{
 		Buffer stream = new Buffer(streamLoader.getDataForName(s + ".dat"));
 		Buffer stream_1 = new Buffer(streamLoader.getDataForName("index.dat"));
-		stream_1.currentOffset = stream.readUnsignedWord();
-		anInt1444 = stream_1.readUnsignedWord();
-		anInt1445 = stream_1.readUnsignedWord();
+		stream_1.currentOffset = stream.readUShort();
+		anInt1444 = stream_1.readUShort();
+		anInt1445 = stream_1.readUShort();
 		int j = stream_1.readUnsignedByte();
 		int ai[] = new int[j];
 		for(int k = 0; k < j - 1; k++)
@@ -127,14 +127,14 @@ public final class Sprite extends DrawingArea {
 		for(int l = 0; l < i; l++)
 		{
 			stream_1.currentOffset += 2;
-			stream.currentOffset += stream_1.readUnsignedWord() * stream_1.readUnsignedWord();
+			stream.currentOffset += stream_1.readUShort() * stream_1.readUShort();
 			stream_1.currentOffset++;
 		}
 
 		anInt1442 = stream_1.readUnsignedByte();
 		anInt1443 = stream_1.readUnsignedByte();
-		myWidth = stream_1.readUnsignedWord();
-		myHeight = stream_1.readUnsignedWord();
+		myWidth = stream_1.readUShort();
+		myHeight = stream_1.readUShort();
 		int i1 = stream_1.readUnsignedByte();
 		int j1 = myWidth * myHeight;
 		myPixels = new int[j1];

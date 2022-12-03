@@ -1,5 +1,7 @@
 public final class ItemDef {
 
+	private boolean searchable;
+
 	public static void nullLoader() {
 		mruNodes2 = null;
 		mruNodes1 = null;
@@ -9,12 +11,12 @@ public final class ItemDef {
 	}
 
 	public boolean method192(int j) {
-		int k = anInt175;
-		int l = anInt166;
+		int k = primaryMaleHeadPiece;
+		int l = secondaryMaleHeadPiece;
 		if(j == 1)
 		{
-			k = anInt197;
-			l = anInt173;
+			k = primaryFemaleHeadPiece;
+			l = secondaryFemaleHeadPiece;
 		}
 		if(k == -1)
 			return true;
@@ -29,24 +31,25 @@ public final class ItemDef {
 	public static void unpackConfig(StreamLoader streamLoader)	 {
 		stream = new Buffer(streamLoader.getDataForName("obj.dat"));
 		Buffer stream = new Buffer(streamLoader.getDataForName("obj.idx"));
-		totalItems = stream.readUnsignedWord();
+		totalItems = stream.readUShort();
 		streamIndices = new int[totalItems + 15000];
 		int i = 2;
 		for(int j = 0; j < totalItems; j++) {
 			streamIndices[j] = i;
-			i += stream.readUnsignedWord();
+			i += stream.readUShort();
 		}
 		cache = new ItemDef[10];
-		for(int k = 0; k < 10; k++)
+		for(int k = 0; k < 10; k++) {
 			cache[k] = new ItemDef();
+		}
 	}
 
 	public Model method194(int j) {
-		int k = anInt175;
-		int l = anInt166;
+		int k = primaryMaleHeadPiece;
+		int l = secondaryMaleHeadPiece;
 		if(j == 1) {
-			k = anInt197;
-			l = anInt173;
+			k = primaryFemaleHeadPiece;
+			l = secondaryFemaleHeadPiece;
 		}
 		if(k == -1)
 			return null;
@@ -67,13 +70,13 @@ public final class ItemDef {
 	}
 
 	public boolean method195(int j) {
-		int k = maleEquip1;
-		int l = maleEquip2;
-		int i1 = anInt185;
+		int k = primaryMaleModel;
+		int l = secondaryMaleModel;
+		int i1 = tertiaryMaleEquipmentModel;
 		if(j == 1) {
-			k = femaleEquip1;
-			l = femaleEquip2;
-			i1 = anInt162;
+			k = primaryFemaleModel;
+			l = secondaryFemaleModel;
+			i1 = tertiaryFemaleEquipmentModel;
 		}
 		if(k == -1)
 			return true;
@@ -88,13 +91,13 @@ public final class ItemDef {
 	}
 
 	public Model method196(int i) {
-		int j = maleEquip1;
-		int k = maleEquip2;
-		int l = anInt185;
+		int j = primaryMaleModel;
+		int k = secondaryMaleModel;
+		int l = tertiaryMaleEquipmentModel;
 		if(i == 1) {
-			j = femaleEquip1;
-			k = femaleEquip2;
-			l = anInt162;
+			j = primaryFemaleModel;
+			k = secondaryFemaleModel;
+			l = tertiaryFemaleEquipmentModel;
 		}
 		if(j == -1)
 			return null;
@@ -114,10 +117,10 @@ public final class ItemDef {
 				};
 				model = new Model(2, aclass30_sub2_sub4_sub6s);
 			}
-		if(i == 0 && aByte205 != 0)
-			model.method475(0, aByte205, 0);
-		if(i == 1 && aByte154 != 0)
-			model.method475(0, aByte154, 0);
+		if(i == 0 && maleTranslation != 0)
+			model.method475(0, maleTranslation, 0);
+		if(i == 1 && femaleTranslation != 0)
+			model.method475(0, femaleTranslation, 0);
 		if (originalModelColors != null) {
 			for (int i1 = 0; i1 < originalModelColors.length; i1++)
 				model.method476(originalModelColors[i1], modifiedModelColors[i1]);
@@ -128,71 +131,94 @@ public final class ItemDef {
 
 	
 	public void setDefaults() {
-		modelID = 0;
+		modelId = 0;
 		name = null;
 		description = null;
 		originalModelColors = null;
 		modifiedModelColors = null;
-		modelZoom = 2000;
-		modelRotation1 = 0;
-		modelRotation2 = 0;
-		anInt204 = 0;
-		modelOffset1 = 0;
-		modelOffset2 = 0;
+		modifiedTextureColors = null;
+		originalTextureColors = null;
+		spriteScale = 2000;
+		spritePitch = 0;
+		spriteCameraRoll = 0;
+		spriteCameraYaw = 0;
+		spriteTranslateX = 0;
+		spriteTranslateY = 0;
 		stackable = false;
 		value = 1;
 		membersObject = false;
 		groundActions = null;
-		actions = null;
-		maleEquip1 = -1;
-		maleEquip2 = -1;
-		aByte205 = 0;
-		femaleEquip1 = -1;
-		femaleEquip2 = -1;
-		aByte154 = 0;
-		anInt185 = -1;
-		anInt162 = -1;
-		anInt175 = -1;
-		anInt166 = -1;
-		anInt197 = -1;
-		anInt173 = -1;
+		itemActions = null;
+		primaryMaleModel = -1;
+		secondaryMaleModel = -1;
+		maleTranslation = 0;
+		primaryFemaleModel = -1;
+		secondaryFemaleModel = -1;
+		femaleTranslation = 0;
+		tertiaryMaleEquipmentModel = -1;
+		tertiaryFemaleEquipmentModel = -1;
+		primaryMaleHeadPiece = -1;
+		secondaryMaleHeadPiece = -1;
+		primaryFemaleHeadPiece = -1;
+		secondaryFemaleHeadPiece = -1;
 		stackIDs = null;
 		stackAmounts = null;
 		certID = -1;
 		certTemplateID = -1;
-		anInt167 = 128;
-		anInt192 = 128;
-		anInt191 = 128;
-		anInt196 = 0;
-		anInt184 = 0;
+		groundScaleX = 128;
+		groundScaleY = 128;
+		groundScaleZ = 128;
+		ambient = 0;
+		contrast = 0;
 		team = 0;
+		notedId = -1;
+		unnotedId = -1;
+		placeholderId = -1;
+		placeholderTemplateId = -1;
+		searchable = false;
 	}
 
 	public static ItemDef forID(int i) {
-		for(int j = 0; j < 10; j++)
-			if(cache[j].id == i)
+		for(int j = 0; j < 10; j++) {
+			if (cache[j].id == i) {
 				return cache[j];
+			}
+		}
+		if (i == -1)
+			i = 0;
 		cacheIndex = (cacheIndex + 1) % 10;
 		ItemDef itemDef = cache[cacheIndex];
+		if (i >= streamIndices.length)
+			i = 0;
 		stream.currentOffset = streamIndices[i];
 		itemDef.id = i;
 		itemDef.setDefaults();
 		itemDef.readValues(stream);
-		if(itemDef.certTemplateID != -1)
+		if (itemDef.certTemplateID != -1) {
 			itemDef.toNote();
+		}
+
+		if (itemDef.notedId != -1) {
+			itemDef.method2789(forID(itemDef.notedId), forID(itemDef.unnotedId));
+		}
+
+		if (itemDef.placeholderTemplateId != -1) {
+			itemDef.method2790(forID(itemDef.placeholderTemplateId), forID(itemDef.placeholderId));
+		}
+
 		if(!isMembers && itemDef.membersObject) {
 			itemDef.name = "Members Object";
 			itemDef.description = "Login to a members' server to use this object.".getBytes();
 			itemDef.groundActions = null;
-			itemDef.actions = null;
+			itemDef.itemActions = null;
 			itemDef.team = 0;
 		}
 		return itemDef;
 	}
 
 	public void actionData(int a, String b) {
-		actions = new String[5];
-		actions[a] = b;
+		itemActions = new String[5];
+		itemActions[a] = b;
 	}
 	public void totalColors(int total) {
 	   originalModelColors = new int[total];	   
@@ -206,43 +232,103 @@ public final class ItemDef {
 		name = n;
 		description = d.getBytes();
 	}
-	public void models(int mID, int mE, int fE, int mE2, int fE2) {
-		modelID = mID;
-		maleEquip1 = mE;
-		femaleEquip1 = fE;
-		maleEquip2 = mE2;
-		femaleEquip2 = fE2;
-	}
-	public void modelData(int mZ, int mR1, int mR2, int mO1, int mO2) {
-		modelZoom = mZ;
-		modelRotation1 = mR1;
-		modelRotation2 = mR2;
-		modelOffset1 = mO1;
-		modelOffset2 = mO2;
+	void method2789(ItemDef var1, ItemDef var2) {
+		modelId = var1.modelId * 1;
+		spriteScale = var1.spriteScale * 1;
+		spritePitch = 1 * var1.spritePitch;
+		spriteCameraRoll = 1 * var1.spriteCameraRoll;
+		spriteCameraYaw = 1 * var1.spriteCameraYaw;
+		spriteTranslateX = 1 * var1.spriteTranslateX;
+		spriteTranslateY = var1.spriteTranslateY * 1;
+		originalModelColors = var2.originalModelColors;
+		modifiedModelColors = var2.modifiedModelColors;
+		originalTextureColors = var2.originalTextureColors;
+		modifiedTextureColors = var2.modifiedTextureColors;
+		name = var2.name;
+		membersObject = var2.membersObject;
+		stackable = var2.stackable;
+		primaryMaleModel = 1 * var2.primaryMaleModel;
+		secondaryMaleModel = 1 * var2.secondaryMaleModel;
+		tertiaryMaleEquipmentModel = 1 * var2.tertiaryMaleEquipmentModel;
+		primaryFemaleModel = var2.primaryFemaleModel * 1;
+		secondaryFemaleModel = var2.secondaryFemaleModel * 1;
+		tertiaryFemaleEquipmentModel = 1 * var2.tertiaryFemaleEquipmentModel;
+		primaryMaleHeadPiece = 1 * var2.primaryMaleHeadPiece;
+		secondaryMaleHeadPiece = var2.secondaryMaleHeadPiece * 1;
+		primaryFemaleHeadPiece = var2.primaryFemaleHeadPiece * 1;
+		secondaryFemaleHeadPiece = var2.secondaryFemaleHeadPiece * 1;
+		team = var2.team * 1;
+		groundActions = var2.groundActions;
+		itemActions = new String[5];
+		//equipActions = new String[5];
+		if (null != var2.itemActions) {
+			for (int var4 = 0; var4 < 4; ++var4) {
+				itemActions[var4] = var2.itemActions[var4];
+			}
+		}
+
+		itemActions[4] = "Discard";
+		value = 0;
 	}
 
-	public void toNote() {
+	void method2790(ItemDef var1, ItemDef var2) {
+		modelId = var1.modelId * 1;
+		spriteScale = 1 * var1.spriteScale;
+		spritePitch = var1.spritePitch * 1;
+		spriteCameraRoll = var1.spriteCameraRoll * 1;
+		spriteCameraYaw = var1.spriteCameraYaw * 1;
+		spriteTranslateX = 1 * var1.spriteTranslateX;
+		spriteTranslateY = var1.spriteTranslateY * 1;
+		originalModelColors = var1.originalModelColors;
+		modifiedModelColors = var1.modifiedModelColors;
+		originalTextureColors = var1.originalTextureColors;
+		modifiedTextureColors = var1.modifiedTextureColors;
+		stackable = var1.stackable;
+		name = var2.name;
+		value = 0;
+	}
+
+	public void models(int mID, int mE, int fE, int mE2, int fE2) {
+		modelId = mID;
+		primaryMaleModel = mE;
+		primaryFemaleModel = fE;
+		secondaryMaleModel = mE2;
+		secondaryFemaleModel = fE2;
+	}
+	public void modelData(int mZ, int mR1, int mR2, int mO1, int mO2) {
+		spriteScale = mZ;
+		spritePitch = mR1;
+		spriteCameraRoll = mR2;
+		spriteTranslateX = mO1;
+		spriteTranslateY = mO2;
+	}
+
+	private void toNote() {
 		ItemDef itemDef = forID(certTemplateID);
-		modelID = itemDef.modelID;
-		modelZoom = itemDef.modelZoom;
-		modelRotation1 = itemDef.modelRotation1;
-		modelRotation2 = itemDef.modelRotation2;
-		anInt204 = itemDef.anInt204;
-		modelOffset1 = itemDef.modelOffset1;
-		modelOffset2 = itemDef.modelOffset2;
-		originalModelColors = itemDef.originalModelColors;
+		modelId = itemDef.modelId;
+		spriteScale = itemDef.spriteScale;
+		spritePitch = itemDef.spritePitch;
+		spriteCameraRoll = itemDef.spriteCameraRoll;
+
+		spriteCameraYaw = itemDef.spriteCameraYaw;
+		spriteTranslateX = itemDef.spriteTranslateX;
+		spriteTranslateY = itemDef.spriteTranslateY;
 		modifiedModelColors = itemDef.modifiedModelColors;
+		originalModelColors = itemDef.originalModelColors;
 		ItemDef itemDef_1 = forID(certID);
 		name = itemDef_1.name;
 		membersObject = itemDef_1.membersObject;
 		value = itemDef_1.value;
 		String s = "a";
-//		char c = itemDef_1.name.charAt(0);
-	//	if(c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U')
-			s = "an";
+		if (itemDef_1.name != null) {
+			char c = itemDef_1.name.charAt(0);
+			if (c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U')
+				s = "an";
+		}
 		description = ("Swap this note at any bank for " + s + " " + itemDef_1.name + ".").getBytes();
 		stackable = true;
 	}
+
 
 	public static Sprite getSprite(int i, int j, int k) {
 		if(k == 0) {
@@ -273,6 +359,14 @@ public final class ItemDef {
 			sprite = getSprite(itemDef.certID, 10, -1);
 			if(sprite == null)
 				return null;
+		} else if (itemDef.notedId != -1) {
+			sprite = getSprite(itemDef.unnotedId, j, -1);
+			if (sprite == null)
+				return null;
+		} else if (itemDef.placeholderTemplateId != -1) {
+			sprite = getSprite(itemDef.placeholderId, j, -1);
+			if (sprite == null)
+				return null;
 		}
 		Sprite sprite2 = new Sprite(32, 32);
 		int k1 = Texture.textureInt1;
@@ -289,14 +383,23 @@ public final class ItemDef {
 		DrawingArea.initDrawingArea(32, 32, sprite2.myPixels);
 		DrawingArea.drawPixels(32, 0, 0, 0, 32);
 		Texture.method364();
-		int k3 = itemDef.modelZoom;
+		if (itemDef.placeholderTemplateId != -1) {
+			int l5 = sprite.anInt1444;
+			int j6 = sprite.anInt1445;
+			sprite.anInt1444 = 32;
+			sprite.anInt1445 = 32;
+			sprite.drawSprite(0, 0);
+			sprite.anInt1444 = l5;
+			sprite.anInt1445 = j6;
+		}
+		int k3 = itemDef.spriteScale;
 		if(k == -1)
 			k3 = (int)((double)k3 * 1.5D);
 		if(k > 0)
 			k3 = (int)((double)k3 * 1.04D);
-		int l3 = Texture.anIntArray1470[itemDef.modelRotation1] * k3 >> 16;
-		int i4 = Texture.anIntArray1471[itemDef.modelRotation1] * k3 >> 16;
-		model.method482(itemDef.modelRotation2, itemDef.anInt204, itemDef.modelRotation1, itemDef.modelOffset1, l3 + model.modelHeight / 2 + itemDef.modelOffset2, i4 + itemDef.modelOffset2);
+		int l3 = Texture.anIntArray1470[itemDef.spritePitch] * k3 >> 16;
+		int i4 = Texture.anIntArray1471[itemDef.spritePitch] * k3 >> 16;
+		model.method482(itemDef.spriteCameraRoll, itemDef.spriteCameraYaw, itemDef.spritePitch, itemDef.spriteTranslateX, l3 + model.modelHeight / 2 + itemDef.spriteTranslateY, i4 + itemDef.spriteTranslateY);
 		for(int i5 = 31; i5 >= 0; i5--) {
 			for(int j4 = 31; j4 >= 0; j4--)
 				if(sprite2.myPixels[i5 + j4 * 32] == 0)
@@ -328,6 +431,15 @@ public final class ItemDef {
 					if(sprite2.myPixels[k5 + l4 * 32] == 0 && k5 > 0 && l4 > 0 && sprite2.myPixels[(k5 - 1) + (l4 - 1) * 32] > 0)
 						sprite2.myPixels[k5 + l4 * 32] = 0x302020;
 			}
+		}
+		if (itemDef.notedId != -1) {
+			int l5 = sprite.anInt1444;
+			int j6 = sprite.anInt1445;
+			sprite.anInt1444 = 32;
+			sprite.anInt1445 = 32;
+			sprite.drawSprite(0, 0);
+			sprite.anInt1444 = l5;
+			sprite.anInt1445 = j6;
 		}
 		if(itemDef.certTemplateID != -1) {
 			int l5 = sprite.anInt1444;
@@ -366,17 +478,17 @@ public final class ItemDef {
 		Model model = (Model) mruNodes2.insertFromCache(id);
 		if(model != null)
 			return model;
-		model = Model.method462(modelID);
+		model = Model.method462(modelId);
 		if(model == null)
 			return null;
-		if(anInt167 != 128 || anInt192 != 128 || anInt191 != 128)
-			model.method478(anInt167, anInt191, anInt192);
-		if (originalModelColors != null) {
-			for (int l = 0; l < originalModelColors.length; l++)
-				model.method476(originalModelColors[l], modifiedModelColors[l]);
+		if(groundScaleX != 128 || groundScaleY != 128 || groundScaleZ != 128)
+			model.method478(groundScaleX, groundScaleZ, groundScaleY);
+		if (modifiedModelColors != null) {
+			for (int l = 0; l < modifiedModelColors.length; l++)
+				model.method476(modifiedModelColors[l], originalModelColors[l]);
 
 		}
-		model.method479(64 + anInt196, 768 + anInt184, -50, -10, -50, true);
+		model.method479(64 + ambient, 768 + contrast, -50, -10, -50, true);
 		model.fits_on_single_square = true;
 		mruNodes2.removeFromCache(model, id);
 		return model;
@@ -391,123 +503,160 @@ public final class ItemDef {
 			if(j != -1)
 				return forID(j).method202(1);
 		}
-		Model model = Model.method462(modelID);
+		Model model = Model.method462(modelId);
 		if(model == null)
 			return null;
-		if (originalModelColors != null) {
-			for (int l = 0; l < originalModelColors.length; l++)
-				model.method476(originalModelColors[l], modifiedModelColors[l]);
+		if (modifiedModelColors != null) {
+			for (int l = 0; l < modifiedModelColors.length; l++)
+				model.method476(modifiedModelColors[l], originalModelColors[l]);
 
 		}
 		return model;
 	}
 
-	public void readValues(Buffer stream) {
-		do {
-			int i = stream.readUnsignedByte();
-			if(i == 0)
+	private void readValues(Buffer stream) {
+		while (true) {
+			int opcode = stream.readUnsignedByte();
+			if (opcode == 0)
 				return;
-			if(i == 1)
-				modelID = stream.readUnsignedWord();
-			else if(i == 2)
+			if (opcode == 1)
+				modelId = stream.readUShort();
+			else if (opcode == 2)
 				name = stream.readString();
-			else if(i == 3)
+			else if (opcode == 3)
 				description = stream.readBytes();
-			else if(i == 4)
-				modelZoom = stream.readUnsignedWord();
-			else if(i == 5)
-				modelRotation1 = stream.readUnsignedWord();
-			else if(i == 6)
-				modelRotation2 = stream.readUnsignedWord();
-			else if(i == 7) {
-				modelOffset1 = stream.readUnsignedWord();
-				if(modelOffset1 > 32767)
-					modelOffset1 -= 0x10000;
-			} else if(i == 8) {
-				modelOffset2 = stream.readUnsignedWord();
-				if(modelOffset2 > 32767)
-					modelOffset2 -= 0x10000;
-			} else if(i == 10)
-				stream.readUnsignedWord();
-			else if(i == 11)
+			else if (opcode == 4)
+				spriteScale = stream.readUShort();
+			else if (opcode == 5)
+				spritePitch = stream.readUShort();
+			else if (opcode == 6)
+				spriteCameraRoll = stream.readUShort();
+			else if (opcode == 7) {
+				spriteTranslateX = stream.readUShort();
+				if (spriteTranslateX > 32767)
+					spriteTranslateX -= 0x10000;
+			} else if (opcode == 8) {
+				spriteTranslateY = stream.readUShort();
+				if (spriteTranslateY > 32767)
+					spriteTranslateY -= 0x10000;
+			} else if (opcode == 11)
 				stackable = true;
-			else if(i == 12)
+			else if (opcode == 12)
 				value = stream.readDWord();
-			else if(i == 16)
+			else if(opcode == 13)
+				this.field2142 = stream.readSignedByte();
+			else if(opcode == 14)
+				this.field2157 = stream.readSignedByte();
+			else if (opcode == 16)
 				membersObject = true;
-			else if(i == 23) {
-				maleEquip1 = stream.readUnsignedWord();
-				aByte205 = stream.readSignedByte();
-			} else if(i == 24)
-				maleEquip2 = stream.readUnsignedWord();
-			else if(i == 25) {
-				femaleEquip1 = stream.readUnsignedWord();
-				aByte154 = stream.readSignedByte();
-			} else if(i == 26)
-				femaleEquip2 = stream.readUnsignedWord();
-			else if(i >= 30 && i < 35) {
-				if(groundActions == null)
+			else if (opcode == 23) {
+				primaryMaleModel = stream.readUShort();
+				maleTranslation = stream.readSignedByte();
+				if (primaryMaleModel == 65535)
+					primaryMaleModel = -1;
+			} else if (opcode == 24)
+				secondaryMaleModel = stream.readUShort();
+			else if (opcode == 25) {
+				primaryFemaleModel = stream.readUShort();
+				femaleTranslation = stream.readSignedByte();
+				if (primaryFemaleModel == 65535)
+					primaryFemaleModel = -1;
+			} else if (opcode == 26)
+				secondaryFemaleModel = stream.readUShort();
+			else if(opcode == 27)
+				this.field2158 = stream.readSignedByte();
+			else if (opcode >= 30 && opcode < 35) {
+				if (groundActions == null)
 					groundActions = new String[5];
-				groundActions[i - 30] = stream.readString();
-				if(groundActions[i - 30].equalsIgnoreCase("hidden"))
-					groundActions[i - 30] = null;
-			} else if(i >= 35 && i < 40) {
-				if(actions == null)
-					actions = new String[5];
-				actions[i - 35] = stream.readString();
-			} else if(i == 40) {
-				int j = stream.readUnsignedByte();
-				originalModelColors = new int[j];
-				modifiedModelColors = new int[j];
-				for(int k = 0; k < j; k++) {
-					originalModelColors[k] = stream.readUnsignedWord();
-					modifiedModelColors[k] = stream.readUnsignedWord();
+				groundActions[opcode - 30] = stream.readString();
+				if (groundActions[opcode - 30].equalsIgnoreCase("hidden"))
+					groundActions[opcode - 30] = null;
+			} else if (opcode >= 35 && opcode < 40) {
+				if (itemActions == null)
+					itemActions = new String[5];
+				itemActions[opcode - 35] = stream.readString();
+			} else if (opcode == 40) {
+				int size = stream.readUnsignedByte();
+				originalModelColors = new int[size];
+				modifiedModelColors = new int[size];
+				for (int index = 0; index < size; index++) {
+					originalModelColors[index] = stream.readUShort();
+					modifiedModelColors[index] = stream.readUShort();
 				}
-			} else if(i == 78)
-				anInt185 = stream.readUnsignedWord();
-			else if(i == 79)
-				anInt162 = stream.readUnsignedWord();
-			else if(i == 90)
-				anInt175 = stream.readUnsignedWord();
-			else if(i == 91)
-				anInt197 = stream.readUnsignedWord();
-			else if(i == 92)
-				anInt166 = stream.readUnsignedWord();
-			else if(i == 93)
-				anInt173 = stream.readUnsignedWord();
-			else if(i == 95)
-				anInt204 = stream.readUnsignedWord();
-			else if(i == 97)
-				certID = stream.readUnsignedWord();
-			else if(i == 98)
-				certTemplateID = stream.readUnsignedWord();
-			else if(i >= 100 && i < 110) {
-				if(stackIDs == null) {
+			} else if (opcode == 41) {
+				int size = stream.readUnsignedByte();
+				originalTextureColors = new short[size];
+				modifiedTextureColors = new short[size];
+				for (int index = 0; index < size; index++) {
+					originalTextureColors[index] = (short) stream.readUShort();
+					modifiedTextureColors[index] = (short) stream.readUShort();
+				}
+			}else if (opcode == 42) {
+				stream.readUnsignedByte();
+			} else if (opcode == 65) {
+				searchable = true;
+			} else if (opcode == 75){
+				this.field2182 = stream.readSignedWord();
+			} else if (opcode == 78)
+				tertiaryMaleEquipmentModel = stream.readUShort();
+			else if (opcode == 79)
+				tertiaryFemaleEquipmentModel = stream.readUShort();
+			else if (opcode == 90)
+				primaryMaleHeadPiece = stream.readUShort();
+			else if (opcode == 91)
+				primaryFemaleHeadPiece = stream.readUShort();
+			else if (opcode == 92)
+				secondaryMaleHeadPiece = stream.readUShort();
+			else if (opcode == 93)
+				secondaryFemaleHeadPiece = stream.readUShort();
+			else if (opcode == 94)
+				stream.readUShort();
+			else if (opcode == 95)
+				spriteCameraYaw = stream.readUShort();
+			else if (opcode == 97)
+				certID = stream.readUShort();
+			else if (opcode == 98)
+				certTemplateID = stream.readUShort();
+			else if (opcode >= 100 && opcode < 110) {
+				if (stackIDs == null) {
 					stackIDs = new int[10];
 					stackAmounts = new int[10];
 				}
-				stackIDs[i - 100] = stream.readUnsignedWord();
-				stackAmounts[i - 100] = stream.readUnsignedWord();
-			} else if(i == 110)
-				anInt167 = stream.readUnsignedWord();
-			else if(i == 111)
-				anInt192 = stream.readUnsignedWord();
-			else if(i == 112)
-				anInt191 = stream.readUnsignedWord();
-			else if(i == 113)
-				anInt196 = stream.readSignedByte();
-			else if(i == 114)
-				anInt184 = stream.readSignedByte() * 5;
-			else if(i == 115)
+				stackIDs[opcode - 100] = stream.readUShort();
+				stackAmounts[opcode - 100] = stream.readUShort();
+			} else if (opcode == 110)
+				groundScaleX = stream.readUShort();
+			else if (opcode == 111)
+				groundScaleY = stream.readUShort();
+			else if (opcode == 112)
+				groundScaleZ = stream.readUShort();
+			else if (opcode == 113)
+				ambient = stream.readSignedByte();
+			else if (opcode == 114)
+				contrast = stream.readSignedByte() * 5;
+			else if (opcode == 115)
 				team = stream.readUnsignedByte();
-		} while(true);
+			else if (opcode == 139)
+				unnotedId = stream.readUShort();
+			else if (opcode == 140)
+				notedId = stream.readUShort();
+			else if (opcode == 148)
+				placeholderId = stream.readUShort();
+			else if (opcode == 149)
+				placeholderTemplateId = stream.readUShort();
+			else {
+				// System.out.println("Error loading item " + id + ", opcode " + opcode);
+			}
+		}
 	}
+
+	public int unnotedId, notedId, placeholderId, placeholderTemplateId;
 
 	public ItemDef() {
 		id = -1;
 	}
 
-	public byte aByte154;
+	public byte femaleTranslation;
 	public int value;
 	public int[] modifiedModelColors;
 	public int id;
@@ -515,45 +664,51 @@ public final class ItemDef {
 	public static MRUNodes mruNodes2 = new MRUNodes(50);
 	public int[] originalModelColors;
 	public boolean membersObject;
-	public int anInt162;
+	public int tertiaryFemaleEquipmentModel;
 	public int certTemplateID;
-	public int femaleEquip2;
-	public int maleEquip1;
-	public int anInt166;
-	public int anInt167;
+	public int secondaryFemaleModel;
+	public int primaryMaleModel;
+	public int secondaryMaleHeadPiece;
+	public int groundScaleX;
 	public String groundActions[];
-	public int modelOffset1;
+	public int spriteTranslateX;
 	public String name;
 	public static ItemDef[] cache;
-	public int anInt173;
-	public int modelID;
-	public int anInt175;
+	public int secondaryFemaleHeadPiece;
+	public int modelId;
+	public int primaryMaleHeadPiece;
 	public boolean stackable;
 	public byte description[];
 	public int certID;
 	public static int cacheIndex;
-	public int modelZoom;
+	public int spriteScale;
 	public static boolean isMembers = true;
 	public static Buffer stream;
-	public int anInt184;
-	public int anInt185;
-	public int maleEquip2;
-	public String actions[];
-	public int modelRotation1;
-	public int anInt191;
-	public int anInt192;
+	public int contrast;
+	public int tertiaryMaleEquipmentModel;
+	public int secondaryMaleModel;
+	public String itemActions[];
+	public int spritePitch;
+	public int groundScaleZ;
+	public int groundScaleY;
 	public int[] stackIDs;
-	public int modelOffset2;
+	public int spriteTranslateY;
 	public static int[] streamIndices;
-	public int anInt196;
-	public int anInt197;
-	public int modelRotation2;
-	public int femaleEquip1;
+	public int ambient;
+	public int primaryFemaleHeadPiece;
+	public int spriteCameraRoll;
+	public int primaryFemaleModel;
 	public int[] stackAmounts;
 	public int team;
 	public static int totalItems;
-	public int anInt204;
-	public byte aByte205;
+	public int spriteCameraYaw;
+	public int field2142 = -1;
+	public int field2157 = -1;
+	public int field2158 = -1;
+	private short[] originalTextureColors;
+	private short[] modifiedTextureColors;
+	private int field2182;
+	public byte maleTranslation;
 	public int anInt164;
 	public int anInt199;
 	public int anInt188;

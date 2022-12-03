@@ -7,7 +7,7 @@ public final class Flo {
 	public static void unpackConfig(StreamLoader streamLoader)
 	{
 		Buffer stream = new Buffer(streamLoader.getDataForName("flo.dat"));
-		int cacheSize = stream.readUnsignedWord();
+		int cacheSize = stream.readUShort();
 		if(cache == null)
 			cache = new Flo[cacheSize];
 		for(int j = 0; j < cacheSize; j++)

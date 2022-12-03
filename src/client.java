@@ -237,7 +237,7 @@ public class client extends RSApplet {
     }
 
 	public String indexLocation(int cacheIndex, int index) {
-		return "D:\\dump\\index" + cacheIndex + "/" + (index != -1 ? index + ".gz" : "");
+		return "D:\\208.3dump\\index" + cacheIndex + "/" + (index != -1 ? index + ".gz" : "");
 	}
 
 	public void repackCacheAll() {
@@ -697,10 +697,10 @@ public class client extends RSApplet {
 			for(int j5 = i2; j5 <= l2; j5++)
 				if(l3 == k || l3 == j1 || j5 == i2 || j5 == l2)
 				{
-					int j7 = onDemandFetcher.method562(0, j5, l3);
+					int j7 = onDemandFetcher.getMapFiles(0, j5, l3);
 					if(j7 != -1)
 						onDemandFetcher.method560(j7, 3);
-					int k8 = onDemandFetcher.method562(1, j5, l3);
+					int k8 = onDemandFetcher.getMapFiles(1, j5, l3);
 					if(k8 != -1)
 						onDemandFetcher.method560(k8, 3);
 				}
@@ -790,9 +790,9 @@ public class client extends RSApplet {
 							}
 
 						}
-						aClass30_Sub2_Sub1_Sub1Array1140[anInt1071] = mapFunctions[j3];
-						anIntArray1072[anInt1071] = k3;
-						anIntArray1073[anInt1071] = l3;
+//						aClass30_Sub2_Sub1_Sub1Array1140[anInt1071] = mapFunctions[j3];
+						//anIntArray1072[anInt1071] = k3;
+						//anIntArray1073[anInt1071] = l3;
 						anInt1071++;
 					}
 				}
@@ -1026,9 +1026,9 @@ public class client extends RSApplet {
 										if(class9_1.isInventoryInterface)
 										{
 											for(int l3 = 4; l3 >= 3; l3--)
-												if(itemDef.actions != null && itemDef.actions[l3] != null)
+												if(itemDef.itemActions != null && itemDef.itemActions[l3] != null)
 												{
-													menuActionName[menuActionRow] = itemDef.actions[l3] + " @lre@" + itemDef.name;
+													menuActionName[menuActionRow] = itemDef.itemActions[l3] + " @lre@" + itemDef.name;
 													if(l3 == 3)
 														menuActionID[menuActionRow] = 493;
 													if(l3 == 4)
@@ -1058,12 +1058,12 @@ public class client extends RSApplet {
 											menuActionCmd3[menuActionRow] = class9_1.id;
 											menuActionRow++;
 										}
-										if(class9_1.isInventoryInterface && itemDef.actions != null)
+										if(class9_1.isInventoryInterface && itemDef.itemActions != null)
 										{
 											for(int i4 = 2; i4 >= 0; i4--)
-												if(itemDef.actions[i4] != null)
+												if(itemDef.itemActions[i4] != null)
 												{
-													menuActionName[menuActionRow] = itemDef.actions[i4] + " @lre@" + itemDef.name;
+													menuActionName[menuActionRow] = itemDef.itemActions[i4] + " @lre@" + itemDef.name;
 													if(i4 == 0)
 														menuActionID[menuActionRow] = 74;
 													if(i4 == 1)
@@ -1277,7 +1277,7 @@ public class client extends RSApplet {
 	                {
 	                    nextSong = currentSong;
 	                    songChanging = true;
-	                    onDemandFetcher.method558(2, nextSong);
+	                    onDemandFetcher.provide(2, nextSong);
 	                } else
 	                {
 	                    stopMidi();
@@ -2701,15 +2701,12 @@ public class client extends RSApplet {
 				if(onDemandData.dataType == 0)
 				{
 					Model.method460(onDemandData.buffer, onDemandData.ID);
-					if((onDemandFetcher.getModelIndex(onDemandData.ID) & 0x62) != 0)
-					{
 						needDrawTabArea = true;
 						if(backDialogID != -1)
 							inputTaken = true;
-					}
 				}
 				if(onDemandData.dataType == 1 && onDemandData.buffer != null)
-					Class36.method529(onDemandData.buffer);
+					Class36.load(onDemandData.ID, onDemandData.buffer);
 				if (onDemandData.dataType == 2 && onDemandData.ID == nextSong && onDemandData.buffer != null)
                    SoundProvider.getSingleton().playMIDI(onDemandData.buffer, 0);
 				if(onDemandData.dataType == 3 && loadingStage == 1)
@@ -5451,7 +5448,7 @@ public class client extends RSApplet {
 					}
 
 				model.method469();
-				model.method470(Animation.anims[myPlayer.anInt1511].anIntArray353[0]);
+				model.method470(Animation.anims[myPlayer.anInt1511].primaryFrames[0]);
 				model.method479(64, 850, -30, -50, -30, true);
 				class9.anInt233 = 5;
 				class9.mediaID = 0;
@@ -6555,7 +6552,7 @@ public class client extends RSApplet {
 			}
 			if((l & 0x80) != 0)
 			{
-				npc.anInt1520 = stream.readUnsignedWord();
+				npc.anInt1520 = stream.readUShort();
 				int k1 = stream.readDWord();
 				npc.anInt1524 = k1 >> 16;
 				npc.anInt1523 = loopCycle + (k1 & 0xffff);
@@ -6568,7 +6565,7 @@ public class client extends RSApplet {
 			}
 			if((l & 0x20) != 0)
 			{
-				npc.interactingEntity = stream.readUnsignedWord();
+				npc.interactingEntity = stream.readUShort();
 				if(npc.interactingEntity == 65535)
 					npc.interactingEntity = -1;
 			}
@@ -6864,7 +6861,7 @@ public class client extends RSApplet {
 	            {
 	                nextSong = currentSong;
 	                songChanging = true;
-	                onDemandFetcher.method558(2, nextSong);
+	                onDemandFetcher.provide(2, nextSong);
 	            }
 	        }
 	    }
@@ -6937,12 +6934,8 @@ public class client extends RSApplet {
 	{
 		drawLoadingText(20, "Starting up");
 		//new CacheDownloader(this).downloadCache();
-		if(signlink.sunjava)
+		if(signlink.sunjava) {
 			super.minDelay = 5;
-		if(aBoolean993)
-		{
- //		   rsAlreadyLoaded = true;
- //		   return;
 		}
 		aBoolean993 = true;
 		boolean flag = true;
@@ -6951,8 +6944,9 @@ public class client extends RSApplet {
 		{
 			for(int i = 0; i < 5; i++)
 				decompressors[i] = new Decompressor(signlink.cache_dat, signlink.cache_idx[i], i + 1);
-		} try {
-		//	connectServer();
+		}
+
+		try {
 			titleStreamLoader = streamLoaderForName(1, "title screen", "title", expectedCRCs[1], 25);
 			smallText = new TextDrawingArea(false, "p11_full", titleStreamLoader);
 			aTextDrawingArea_1271 = new TextDrawingArea(false, "p12_full", titleStreamLoader);
@@ -6977,147 +6971,9 @@ public class client extends RSApplet {
 			drawLoadingText(60, "Connecting to update server");
 			onDemandFetcher = new OnDemandFetcher();
 			onDemandFetcher.start(streamLoader_6, this);
-			Class36.method528(onDemandFetcher.getAnimCount());
-			Model.method459(onDemandFetcher.getVersionCount(0), onDemandFetcher);
-		repackCacheIndex(1);
-			if(!lowMem)
-			{
-				nextSong = 0;
-				try
-				{
-					nextSong = Integer.parseInt(getParameter("music"));
-				}
-				catch(Exception _ex) { }
-				songChanging = true;
-				onDemandFetcher.method558(2, nextSong);
-				while(onDemandFetcher.getNodeCount() > 0)
-				{
-					processOnDemandQueue();
-					try
-					{
-						Thread.sleep(100L);
-					}
-					catch(Exception _ex) { }
-					if(onDemandFetcher.anInt1349 > 3)
-					{
-						loadError();
-						return;
-					}
-				}
-			}
-			drawLoadingText(65, "Requesting animations");
-			int k = onDemandFetcher.getVersionCount(1);
-			for(int i1 = 0; i1 < k; i1++)
-				onDemandFetcher.method558(1, i1);
-
-			while(onDemandFetcher.getNodeCount() > 0)
-			{
-				int j1 = k - onDemandFetcher.getNodeCount();
-				if(j1 > 0)
-					drawLoadingText(65, "Loading animations - " + (j1 * 100) / k + "%");
-				processOnDemandQueue();
-				try
-				{
-					Thread.sleep(100L);
-				}
-				catch(Exception _ex) { }
-				if(onDemandFetcher.anInt1349 > 3)
-				{
-					loadError();
-					return;
-				}
-			}
-			drawLoadingText(70, "Requesting models");
-			k = onDemandFetcher.getVersionCount(0);
-			for(int k1 = 0; k1 < k; k1++)
-			{
-				int l1 = onDemandFetcher.getModelIndex(k1);
-				if((l1 & 1) != 0)
-					onDemandFetcher.method558(0, k1);
-			}
-
-			k = onDemandFetcher.getNodeCount();
-			while(onDemandFetcher.getNodeCount() > 0)
-			{
-				int i2 = k - onDemandFetcher.getNodeCount();
-				if(i2 > 0)
-					drawLoadingText(70, "Loading models - " + (i2 * 100) / k + "%");
-				processOnDemandQueue();
-				try
-				{
-					Thread.sleep(100L);
-				}
-				catch(Exception _ex) { }
-			}
-			if(decompressors[0] != null)
-			{
-				drawLoadingText(75, "Requesting maps");
-				onDemandFetcher.method558(3, onDemandFetcher.method562(0, 48, 47));
-				onDemandFetcher.method558(3, onDemandFetcher.method562(1, 48, 47));
-				onDemandFetcher.method558(3, onDemandFetcher.method562(0, 48, 48));
-				onDemandFetcher.method558(3, onDemandFetcher.method562(1, 48, 48));
-				onDemandFetcher.method558(3, onDemandFetcher.method562(0, 48, 49));
-				onDemandFetcher.method558(3, onDemandFetcher.method562(1, 48, 49));
-				onDemandFetcher.method558(3, onDemandFetcher.method562(0, 47, 47));
-				onDemandFetcher.method558(3, onDemandFetcher.method562(1, 47, 47));
-				onDemandFetcher.method558(3, onDemandFetcher.method562(0, 47, 48));
-				onDemandFetcher.method558(3, onDemandFetcher.method562(1, 47, 48));
-				onDemandFetcher.method558(3, onDemandFetcher.method562(0, 148, 48));
-				onDemandFetcher.method558(3, onDemandFetcher.method562(1, 148, 48));
-				k = onDemandFetcher.getNodeCount();
-				while(onDemandFetcher.getNodeCount() > 0)
-				{
-					int j2 = k - onDemandFetcher.getNodeCount();
-					if(j2 > 0)
-						drawLoadingText(75, "Loading maps - " + (j2 * 100) / k + "%");
-					processOnDemandQueue();
-					try
-					{
-						Thread.sleep(100L);
-					}
-					catch(Exception _ex) { }
-				}
-			}
-			k = onDemandFetcher.getVersionCount(0);
-			for(int k2 = 0; k2 < k; k2++)
-			{
-				int l2 = onDemandFetcher.getModelIndex(k2);
-				byte byte0 = 0;
-				if((l2 & 8) != 0)
-					byte0 = 10;
-				else
-				if((l2 & 0x20) != 0)
-					byte0 = 9;
-				else
-				if((l2 & 0x10) != 0)
-					byte0 = 8;
-				else
-				if((l2 & 0x40) != 0)
-					byte0 = 7;
-				else
-				if((l2 & 0x80) != 0)
-					byte0 = 6;
-				else
-				if((l2 & 2) != 0)
-					byte0 = 5;
-				else
-				if((l2 & 4) != 0)
-					byte0 = 4;
-				if((l2 & 1) != 0)
-					byte0 = 3;
-				if(byte0 != 0)
-					onDemandFetcher.method563(byte0, 0, k2);
-			}
-
-			onDemandFetcher.method554(isMembers);
-			if(!lowMem)
-			{
-				int l = onDemandFetcher.getVersionCount(2);
-				for(int i3 = 1; i3 < l; i3++)
-					if(onDemandFetcher.method569(i3))
-						onDemandFetcher.method563((byte)1, 2, i3);
-
-			}
+			Class36.animationlist = new Class36[3000][0];
+			Model.method459(onDemandFetcher.getModelCount(), onDemandFetcher);
+		repackCacheIndex(4);
 			drawLoadingText(80, "Unpacking media");
 			/* Custom sprite unpacking */
 			chatArea = new Sprite("chatarea");
@@ -7301,6 +7157,7 @@ public class client extends RSApplet {
 		}
 		catch(Exception exception)
 		{
+			exception.printStackTrace();
 			signlink.reporterror("loaderror " + aString1049 + " " + anInt1079);
 		}
 		loadingError = true;
@@ -8210,7 +8067,7 @@ public class client extends RSApplet {
 					} else
 					{
 						Animation animation = Animation.anims[i7];
-						model = class9_1.method209(animation.anIntArray354[class9_1.anInt246], animation.anIntArray353[class9_1.anInt246], flag2);
+						model = class9_1.method209(animation.secondaryFrames[class9_1.anInt246], animation.primaryFrames[class9_1.anInt246], flag2);
 					}
 					if(model != null)
 						model.method482(class9_1.modelRotation2, 0, class9_1.modelRotation1, 0, i5, l5);
@@ -9812,9 +9669,9 @@ public class client extends RSApplet {
             int j = stream1.readUnsignedByte();
             int i3 = anInt1268 + (j >> 4 & 7);
             int l5 = anInt1269 + (j & 7);
-            int k8 = stream1.readUnsignedWord();
-            int j11 = stream1.readUnsignedWord();
-            int k13 = stream1.readUnsignedWord();
+            int k8 = stream1.readUShort();
+            int j11 = stream1.readUShort();
+            int k13 = stream1.readUShort();
             if(i3 >= 0 && l5 >= 0 && i3 < 104 && l5 < 104)
             {
                 NodeList nodelist1 = groundArray[plane][i3][l5];
@@ -9842,7 +9699,7 @@ public class client extends RSApplet {
             int k = stream1.readUnsignedByte();
             int j3 = anInt1268 + (k >> 4 & 7);
             int i6 = anInt1269 + (k & 7);
-            int l8 = stream1.readUnsignedWord();
+            int l8 = stream1.readUShort();
             int k11 = stream1.readUnsignedByte();
             int l13 = k11 >> 4 & 0xf;
             int l15 = k11 & 7;
@@ -9861,7 +9718,7 @@ public class client extends RSApplet {
             int j6 = anInt1268 + (k3 >> 4 & 7);
             int i9 = anInt1269 + (k3 & 7);
             int l11 = stream1.method435();
-            int i14 = stream1.readUnsignedWord();
+            int i14 = stream1.readUShort();
             if(j6 >= 0 && i9 >= 0 && j6 < 104 && i9 < 104 && l11 != unknownInt10)
             {
                 Item item2 = new Item();
@@ -9879,7 +9736,7 @@ public class client extends RSApplet {
             int i1 = stream1.method426();
             int l3 = anInt1268 + (i1 >> 4 & 7);
             int k6 = anInt1269 + (i1 & 7);
-            int j9 = stream1.readUnsignedWord();
+            int j9 = stream1.readUShort();
             if(l3 >= 0 && k6 >= 0 && l3 < 104 && k6 < 104)
             {
                 NodeList nodelist = groundArray[plane][l3][k6];
@@ -9964,17 +9821,17 @@ public class client extends RSApplet {
             int k1 = stream1.method428();
             int j4 = anInt1268 + (k1 >> 4 & 7);
             int i7 = anInt1269 + (k1 & 7);
-            int l9 = stream1.readUnsignedWord();
+            int l9 = stream1.readUShort();
             byte byte0 = stream1.method430();
             int k14 = stream1.method434();
             byte byte1 = stream1.method429();
-            int j17 = stream1.readUnsignedWord();
+            int j17 = stream1.readUShort();
             int j18 = stream1.method428();
             int i19 = j18 >> 2;
             int l19 = j18 & 3;
             int k20 = anIntArray1177[i19];
             byte byte2 = stream1.readSignedByte();
-            int k21 = stream1.readUnsignedWord();
+            int k21 = stream1.readUShort();
             byte byte3 = stream1.method429();
             Player player;
             if(l9 == unknownInt10)
@@ -10043,9 +9900,9 @@ public class client extends RSApplet {
             int i2 = stream1.readUnsignedByte();
             int l4 = anInt1268 + (i2 >> 4 & 7);
             int k7 = anInt1269 + (i2 & 7);
-            int j10 = stream1.readUnsignedWord();
+            int j10 = stream1.readUShort();
             int k12 = stream1.readUnsignedByte();
-            int i15 = stream1.readUnsignedWord();
+            int i15 = stream1.readUShort();
             if(l4 >= 0 && k7 >= 0 && l4 < 104 && k7 < 104)
             {
                 l4 = l4 * 128 + 64;
@@ -10058,7 +9915,7 @@ public class client extends RSApplet {
         if(i == 44)
         {
             int j2 = stream1.method436();
-            int i5 = stream1.readUnsignedWord();
+            int i5 = stream1.readUShort();
             int l7 = stream1.readUnsignedByte();
             int k10 = anInt1268 + (l7 >> 4 & 7);
             int l12 = anInt1269 + (l7 & 7);
@@ -10095,11 +9952,11 @@ public class client extends RSApplet {
             int i11 = k5 + stream1.readSignedByte();
             int j13 = j8 + stream1.readSignedByte();
             int k15 = stream1.readSignedWord();
-            int l16 = stream1.readUnsignedWord();
+            int l16 = stream1.readUShort();
             int l17 = stream1.readUnsignedByte() * 4;
             int k18 = stream1.readUnsignedByte() * 4;
-            int j19 = stream1.readUnsignedWord();
-            int i20 = stream1.readUnsignedWord();
+            int j19 = stream1.readUShort();
+            int i20 = stream1.readUShort();
             int l20 = stream1.readUnsignedByte();
             int i21 = stream1.readUnsignedByte();
             if(k5 >= 0 && j8 >= 0 && k5 < 104 && j8 < 104 && i11 >= 0 && j13 >= 0 && i11 < 104 && j13 < 104 && l16 != 65535)
@@ -10333,7 +10190,7 @@ public class client extends RSApplet {
 				{
 					worldController.method291(i1, j, i, (byte)-119);
 					ObjectDef class46 = ObjectDef.forID(j2);
-					if(class46.aBoolean767)
+					if(class46.solid)
 						aClass11Array1230[j].method215(l2, k2, class46.aBoolean757, i1, i);
 				}
 				if(j1 == 1)
@@ -10344,14 +10201,14 @@ public class client extends RSApplet {
 					ObjectDef class46_1 = ObjectDef.forID(j2);
 					if(i1 + class46_1.anInt744 > 103 || i + class46_1.anInt744 > 103 || i1 + class46_1.anInt761 > 103 || i + class46_1.anInt761 > 103)
 						return;
-					if(class46_1.aBoolean767)
+					if(class46_1.solid)
 						aClass11Array1230[j].method216(l2, class46_1.anInt744, i1, i, class46_1.anInt761, class46_1.aBoolean757);
 				}
 				if(j1 == 3)
 				{
 					worldController.method294(j, i, i1);
 					ObjectDef class46_2 = ObjectDef.forID(j2);
-					if(class46_2.aBoolean767 && class46_2.hasActions)
+					if(class46_2.solid && class46_2.hasActions)
 						aClass11Array1230[j].method218(i, i1);
 				}
 			}
@@ -10469,7 +10326,7 @@ public class client extends RSApplet {
 				{
 					socketStream.flushInputStream(inStream.buffer, 2);
 					inStream.currentOffset = 0;
-					pktSize = inStream.readUnsignedWord();
+					pktSize = inStream.readUShort();
 					i -= 2;
 				} else
 				{
@@ -10496,7 +10353,7 @@ public class client extends RSApplet {
 				unreadMessages = inStream.method435();
 				membersInt = inStream.readUnsignedByte();
 				anInt1193 = inStream.method440();
-				daysSinceLastLogin = inStream.readUnsignedWord();
+				daysSinceLastLogin = inStream.readUShort();
 				if(anInt1193 != 0 && openInterfaceID == -1)
 				{
 					signlink.dnslookup(TextClass.method586(anInt1193));
@@ -10587,7 +10444,7 @@ public class client extends RSApplet {
 				aBoolean1160 = true;
 				anInt1098 = inStream.readUnsignedByte();
 				anInt1099 = inStream.readUnsignedByte();
-				anInt1100 = inStream.readUnsignedWord();
+				anInt1100 = inStream.readUShort();
 				anInt1101 = inStream.readUnsignedByte();
 				anInt1102 = inStream.readUnsignedByte();
 				if(anInt1102 >= 100)
@@ -10617,7 +10474,7 @@ public class client extends RSApplet {
 			}
 			if(pktType == 71)
 			{
-				int l1 = inStream.readUnsignedWord();
+				int l1 = inStream.readUShort();
 				int j10 = inStream.method426();
 				if(l1 == 65535)
 					l1 = -1;
@@ -10636,7 +10493,7 @@ public class client extends RSApplet {
 				{
 					nextSong = i2;
 					songChanging = true;
-					onDemandFetcher.method558(2, nextSong);
+					onDemandFetcher.provide(2, nextSong);
 				}
 				currentSong = i2;
 				pktType = -1;
@@ -10650,7 +10507,7 @@ public class client extends RSApplet {
 				{
 					nextSong = j2;
 					songChanging = false;
-					onDemandFetcher.method558(2, nextSong);
+					onDemandFetcher.provide(2, nextSong);
 					prevSong = k10;
 				}
 				pktType = -1;
@@ -10682,7 +10539,7 @@ public class client extends RSApplet {
 				if(pktType == 73)
 				{
 					l2 = inStream.method435();
-					i11 = inStream.readUnsignedWord();
+					i11 = inStream.readUShort();
 					aBoolean1159 = false;
 				}
 				if(pktType == 241)
@@ -10706,7 +10563,7 @@ public class client extends RSApplet {
 
 					}
 					inStream.finishBitAccess();
-					l2 = inStream.readUnsignedWord();
+					l2 = inStream.readUShort();
 					aBoolean1159 = true;
 				}
 				if(anInt1069 == l2 && anInt1070 == i11 && loadingStage == 2)
@@ -10755,12 +10612,12 @@ public class client extends RSApplet {
 								k16++;
 							} else
 							{
-								int k28 = anIntArray1235[k16] = onDemandFetcher.method562(0, j26, l23);
+								int k28 = anIntArray1235[k16] = onDemandFetcher.getMapFiles(0, j26, l23);
 								if(k28 != -1)
-									onDemandFetcher.method558(3, k28);
-								int j30 = anIntArray1236[k16] = onDemandFetcher.method562(1, j26, l23);
+									onDemandFetcher.provide(3, k28);
+								int j30 = anIntArray1236[k16] = onDemandFetcher.getMapFiles(1, j26, l23);
 								if(j30 != -1)
-									onDemandFetcher.method558(3, j30);
+									onDemandFetcher.provide(3, j30);
 								k16++;
 							}
 						}
@@ -10811,12 +10668,12 @@ public class client extends RSApplet {
 						int i29 = anIntArray1234[l26] = ai[l26];
 						int l30 = i29 >> 8 & 0xff;
 						int l31 = i29 & 0xff;
-						int j32 = anIntArray1235[l26] = onDemandFetcher.method562(0, l31, l30);
+						int j32 = anIntArray1235[l26] = onDemandFetcher.getMapFiles(0, l31, l30);
 						if(j32 != -1)
-							onDemandFetcher.method558(3, j32);
-						int i33 = anIntArray1236[l26] = onDemandFetcher.method562(1, l31, l30);
+							onDemandFetcher.provide(3, j32);
+						int i33 = anIntArray1236[l26] = onDemandFetcher.getMapFiles(1, l31, l30);
 						if(i33 != -1)
-							onDemandFetcher.method558(3, i33);
+							onDemandFetcher.provide(3, i33);
 					}
 
 				}
@@ -10966,9 +10823,9 @@ public class client extends RSApplet {
 			}
 			if(pktType == 174)
 			{
-				int i4 = inStream.readUnsignedWord();
+				int i4 = inStream.readUShort();
 				int l11 = inStream.readUnsignedByte();
-				int k17 = inStream.readUnsignedWord();
+				int k17 = inStream.readUShort();
 				if(aBoolean848 && !lowMem && anInt1062 < 50)
 				{
 					anIntArray1207[anInt1062] = i4;
@@ -11147,7 +11004,7 @@ public class client extends RSApplet {
 			{
 				anInt855 = inStream.readUnsignedByte();
 				if(anInt855 == 1)
-					anInt1222 = inStream.readUnsignedWord();
+					anInt1222 = inStream.readUShort();
 				if(anInt855 >= 2 && anInt855 <= 6)
 				{
 					if(anInt855 == 2)
@@ -11176,19 +11033,19 @@ public class client extends RSApplet {
 						anInt938 = 128;
 					}
 					anInt855 = 2;
-					anInt934 = inStream.readUnsignedWord();
-					anInt935 = inStream.readUnsignedWord();
+					anInt934 = inStream.readUShort();
+					anInt935 = inStream.readUShort();
 					anInt936 = inStream.readUnsignedByte();
 				}
 				if(anInt855 == 10)
-					anInt933 = inStream.readUnsignedWord();
+					anInt933 = inStream.readUShort();
 				pktType = -1;
 				return true;
 			}
 			if(pktType == 248)
 			{
 				int i5 = inStream.method435();
-				int k12 = inStream.readUnsignedWord();
+				int k12 = inStream.readUShort();
 				if(backDialogID != -1)
 				{
 					backDialogID = -1;
@@ -11292,8 +11149,8 @@ public class client extends RSApplet {
 			if(pktType == 246)
 			{
 				int i6 = inStream.method434();
-				int i13 = inStream.readUnsignedWord();
-				int k18 = inStream.readUnsignedWord();
+				int i13 = inStream.readUShort();
+				int k18 = inStream.readUShort();
 				if(k18 == 65535)
 				{
 					RSInterface.interfaceCache[i6].anInt233 = 0;
@@ -11304,9 +11161,9 @@ public class client extends RSApplet {
 					ItemDef itemDef = ItemDef.forID(k18);
 					RSInterface.interfaceCache[i6].anInt233 = 4;
 					RSInterface.interfaceCache[i6].mediaID = k18;
-					RSInterface.interfaceCache[i6].modelRotation1 = itemDef.modelRotation1;
-					RSInterface.interfaceCache[i6].modelRotation2 = itemDef.modelRotation2;
-					RSInterface.interfaceCache[i6].anInt269 = (itemDef.modelZoom * 100) / i13;
+					RSInterface.interfaceCache[i6].modelRotation1 = itemDef.spritePitch;
+					RSInterface.interfaceCache[i6].modelRotation2 = itemDef.spriteCameraRoll;
+					RSInterface.interfaceCache[i6].anInt269 = (itemDef.spriteScale * 100) / i13;
 					pktType = -1;
 					return true;
 				}
@@ -11314,7 +11171,7 @@ public class client extends RSApplet {
 			if(pktType == 171)
 			{
 				boolean flag1 = inStream.readUnsignedByte() == 1;
-				int j13 = inStream.readUnsignedWord();
+				int j13 = inStream.readUShort();
 				RSInterface.interfaceCache[j13].isMouseoverTriggered = flag1;
 				pktType = -1;
 				return true;
@@ -11372,7 +11229,7 @@ public class client extends RSApplet {
 			if(pktType == 8)
 			{
 				int k6 = inStream.method436();
-				int l13 = inStream.readUnsignedWord();
+				int l13 = inStream.readUShort();
 				RSInterface.interfaceCache[k6].anInt233 = 1;
 				RSInterface.interfaceCache[k6].mediaID = l13;
 				pktType = -1;
@@ -11392,9 +11249,9 @@ public class client extends RSApplet {
 			if(pktType == 53)
 			{
 				needDrawTabArea = true;
-				int i7 = inStream.readUnsignedWord();
+				int i7 = inStream.readUShort();
 				RSInterface class9_1 = RSInterface.interfaceCache[i7];
-				int j19 = inStream.readUnsignedWord();
+				int j19 = inStream.readUShort();
 				for(int j22 = 0; j22 < j19; j22++)
 				{
 					int i25 = inStream.readUnsignedByte();
@@ -11416,8 +11273,8 @@ public class client extends RSApplet {
 			if(pktType == 230)
 			{
 				int j7 = inStream.method435();
-				int j14 = inStream.readUnsignedWord();
-				int k19 = inStream.readUnsignedWord();
+				int j14 = inStream.readUShort();
+				int k19 = inStream.readUShort();
 				int k22 = inStream.method436();
 				RSInterface.interfaceCache[j14].modelRotation1 = k19;
 				RSInterface.interfaceCache[j14].modelRotation2 = k22;
@@ -11437,7 +11294,7 @@ public class client extends RSApplet {
 				aBoolean1160 = true;
 				anInt995 = inStream.readUnsignedByte();
 				anInt996 = inStream.readUnsignedByte();
-				anInt997 = inStream.readUnsignedWord();
+				anInt997 = inStream.readUShort();
 				anInt998 = inStream.readUnsignedByte();
 				anInt999 = inStream.readUnsignedByte();
 				if(anInt999 >= 100)
@@ -11492,7 +11349,7 @@ public class client extends RSApplet {
 			}
 			if(pktType == 97)
 			{
-				int l7 = inStream.readUnsignedWord();
+				int l7 = inStream.readUShort();
 				method60(l7);
 				if(invOverlayInterfaceID != -1)
 				{
@@ -11563,7 +11420,7 @@ public class client extends RSApplet {
 			}
 			if(pktType == 200)
 			{
-				int l8 = inStream.readUnsignedWord();
+				int l8 = inStream.readUShort();
 				int i15 = inStream.readSignedWord();
 				RSInterface class9_4 = RSInterface.interfaceCache[l8];
 				class9_4.anInt257 = i15;
@@ -11601,12 +11458,12 @@ public class client extends RSApplet {
 			if(pktType == 34)
 			{
 				needDrawTabArea = true;
-				int i9 = inStream.readUnsignedWord();
+				int i9 = inStream.readUShort();
 				RSInterface class9_2 = RSInterface.interfaceCache[i9];
 				while(inStream.currentOffset < pktSize)
 				{
 					int j20 = inStream.method422();
-					int i23 = inStream.readUnsignedWord();
+					int i23 = inStream.readUShort();
 					int l25 = inStream.readUnsignedByte();
 					if(l25 == 255)
 						l25 = inStream.readDWord();
@@ -11819,7 +11676,7 @@ public class client extends RSApplet {
 		anIntArray968 = new int[33];
 		anIntArray969 = new int[256];
 		decompressors = new Decompressor[5];
-		variousSettings = new int[2000];
+		variousSettings = new int[20000];
 		aBoolean972 = false;
 		anInt975 = 50;
 		anIntArray976 = new int[anInt975];
@@ -12159,7 +12016,7 @@ public class client extends RSApplet {
 	private final int[] anIntArray1065;
 	private int mouseInvInterfaceIndex;
 	private int lastActiveInvInterface;
-	private OnDemandFetcher onDemandFetcher;
+	public OnDemandFetcher onDemandFetcher;
 	private int anInt1069;
 	private int anInt1070;
 	private int anInt1071;

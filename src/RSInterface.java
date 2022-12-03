@@ -17,24 +17,24 @@ public final class RSInterface {
 		aMRUNodes_238 = new MRUNodes(50000);
 		Buffer stream = new Buffer(streamLoader.getDataForName("data"));
 		int i = -1;
-		int j = stream.readUnsignedWord();
+		int j = stream.readUShort();
 		interfaceCache = new RSInterface[j + 10000];
 		while(stream.currentOffset < stream.buffer.length)
 		{
-			int k = stream.readUnsignedWord();
+			int k = stream.readUShort();
 			if(k == 65535)
 			{
-				i = stream.readUnsignedWord();
-				k = stream.readUnsignedWord();
+				i = stream.readUShort();
+				k = stream.readUShort();
 			}
 			RSInterface rsInterface = interfaceCache[k] = new RSInterface();
 			rsInterface.id = k;
 			rsInterface.parentID = i;
 			rsInterface.type = stream.readUnsignedByte();
 			rsInterface.atActionType = stream.readUnsignedByte();
-			rsInterface.contentType = stream.readUnsignedWord();
-			rsInterface.width = stream.readUnsignedWord();
-			rsInterface.height = stream.readUnsignedWord();
+			rsInterface.contentType = stream.readUShort();
+			rsInterface.width = stream.readUShort();
+			rsInterface.height = stream.readUShort();
 			rsInterface.aByte254 = (byte) stream.readUnsignedByte();
 			rsInterface.mOverInterToTrigger = stream.readUnsignedByte();
 			if(rsInterface.mOverInterToTrigger != 0)
@@ -47,7 +47,7 @@ public final class RSInterface {
 				rsInterface.anIntArray212 = new int[i1];
 				for(int j1 = 0; j1 < i1; j1++) {
 					rsInterface.anIntArray245[j1] = stream.readUnsignedByte();
-					rsInterface.anIntArray212[j1] = stream.readUnsignedWord();
+					rsInterface.anIntArray212[j1] = stream.readUShort();
 				}
 
 			}
@@ -55,30 +55,30 @@ public final class RSInterface {
 			if(k1 > 0) {
 				rsInterface.valueIndexArray = new int[k1][];
 				for(int l1 = 0; l1 < k1; l1++) {
-					int i3 = stream.readUnsignedWord();
+					int i3 = stream.readUShort();
 					rsInterface.valueIndexArray[l1] = new int[i3];
 					for(int l4 = 0; l4 < i3; l4++)
-						rsInterface.valueIndexArray[l1][l4] = stream.readUnsignedWord();
+						rsInterface.valueIndexArray[l1][l4] = stream.readUShort();
 
 				}
 
 			}
 			if(rsInterface.type == 0) {
 				rsInterface.drawsTransparent = false;
-				rsInterface.scrollMax = stream.readUnsignedWord();
+				rsInterface.scrollMax = stream.readUShort();
 				rsInterface.isMouseoverTriggered = stream.readUnsignedByte() == 1;
-				int i2 = stream.readUnsignedWord();
+				int i2 = stream.readUShort();
 				rsInterface.children = new int[i2];
 				rsInterface.childX = new int[i2];
 				rsInterface.childY = new int[i2];
 				for(int j3 = 0; j3 < i2; j3++) {
-					rsInterface.children[j3] = stream.readUnsignedWord();
+					rsInterface.children[j3] = stream.readUShort();
 					rsInterface.childX[j3] = stream.readSignedWord();
 					rsInterface.childY[j3] = stream.readSignedWord();
 				}
 			}
 			if(rsInterface.type == 1) {
-				stream.readUnsignedWord();
+				stream.readUShort();
 				stream.readUnsignedByte();
 			}
 			if(rsInterface.type == 2) {
@@ -178,9 +178,9 @@ public final class RSInterface {
 					rsInterface.anInt258 = (l - 1 << 8) + stream.readUnsignedByte();
 				else
 					rsInterface.anInt258 = -1;
-				rsInterface.anInt269 = stream.readUnsignedWord();
-				rsInterface.modelRotation1 = stream.readUnsignedWord();
-				rsInterface.modelRotation2 = stream.readUnsignedWord();
+				rsInterface.anInt269 = stream.readUShort();
+				rsInterface.modelRotation1 = stream.readUShort();
+				rsInterface.modelRotation2 = stream.readUShort();
 			}
 			if(rsInterface.type == 7)
 			{
@@ -208,7 +208,7 @@ public final class RSInterface {
 			{
 				rsInterface.selectedActionName = stream.readString();
 				rsInterface.spellName = stream.readString();
-				rsInterface.spellUsableOn = stream.readUnsignedWord();
+				rsInterface.spellUsableOn = stream.readUShort();
 			}
 
 			if(rsInterface.type == 8)

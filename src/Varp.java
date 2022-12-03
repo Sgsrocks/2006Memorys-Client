@@ -8,7 +8,7 @@ public final class  Varp {
 	{
 		Buffer stream = new Buffer(streamLoader.getDataForName("varp.dat"));
 		anInt702 = 0;
-		int cacheSize = stream.readUnsignedWord();
+		int cacheSize = stream.readUShort();
 		if(cache == null)
 			cache = new Varp[cacheSize];
 		if(anIntArray703 == null)
@@ -44,7 +44,7 @@ public final class  Varp {
 				dummy = 2;
 			else
 			if(j == 5)
-				anInt709 = stream.readUnsignedWord();
+				anInt709 = stream.readUShort();
 			else
 			if(j == 6)
 				dummy = 2;

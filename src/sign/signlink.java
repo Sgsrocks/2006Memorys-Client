@@ -118,8 +118,6 @@ private Position curPosition;
         try
         {
             File file = new File(s + "main_file_cache.dat");
-            if(file.exists() && file.length() > 0x3200000L)
-                file.delete();
             cache_dat = new RandomAccessFile(s + "main_file_cache.dat", "rw");
             for(int j = 0; j < 5; j++)
                 cache_idx[j] = new RandomAccessFile(s + "main_file_cache.idx" + j, "rw");

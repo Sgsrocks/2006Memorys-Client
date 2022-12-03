@@ -26,7 +26,7 @@ final class Animable_Sub5 extends Animable {
 			}
 			anInt1608 = client.loopCycle - k;
 			if(aAnimation_1607 != null)
-				j = aAnimation_1607.anIntArray353[anInt1599];
+				j = aAnimation_1607.primaryFrames[anInt1599];
 		}
 		ObjectDef class46;
 		if(anIntArray1600 != null)

@@ -134,7 +134,7 @@ public final class Buffer extends NodeSub {
 		return buffer[currentOffset++];
 	}
 
-	public int readUnsignedWord()
+	public int readUShort()
 	{
 		currentOffset += 2;
 		return ((buffer[currentOffset - 2] & 0xff) << 8) + (buffer[currentOffset - 1] & 0xff);
@@ -230,7 +230,7 @@ public final class Buffer extends NodeSub {
 		if(i < 128)
 			return readUnsignedByte() - 64;
 		else
-			return readUnsignedWord() - 49152;
+			return readUShort() - 49152;
 	}
 
 	public int method422()
@@ -239,7 +239,7 @@ public final class Buffer extends NodeSub {
 		if(i < 128)
 			return readUnsignedByte();
 		else
-			return readUnsignedWord() - 32768;
+			return readUShort() - 32768;
 	}
 
 	public void doKeys()
@@ -386,6 +386,25 @@ public final class Buffer extends NodeSub {
 
 	public void setOffset(int i) {
 		currentOffset = i;
+	}
+
+	public int read24BitInt()
+	{
+		return (this.readUnsignedByte() << 16) + (this.readUnsignedByte() << 8) + this.readUnsignedByte();
+	}
+
+	public int readShort2() {
+		currentOffset += 2;
+		int i = ((buffer[currentOffset - 2] & 0xff) << 8)
+				+ (buffer[currentOffset - 1] & 0xff);
+		if (i > 60000)
+			i = -65535 + i;
+		return i;
+
+	}
+
+	public void skip(int offset) {
+		this.currentOffset += offset;
 	}
 
 	//removed useless static initializer

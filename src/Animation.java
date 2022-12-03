@@ -7,7 +7,7 @@ public final class Animation {
 	public static void unpackConfig(StreamLoader streamLoader)
 	{
 		Buffer stream = new Buffer(streamLoader.getDataForName("seq.dat"));
-		int length = stream.readUnsignedWord();
+		int length = stream.readUShort();
 		if(anims == null)
 			anims = new Animation[length];
 		for(int j = 0; j < length; j++)
@@ -20,101 +20,123 @@ public final class Animation {
 
 	public int method258(int i)
 	{
-		int j = anIntArray355[i];
+		int j = durations[i];
 		if(j == 0)
 		{
-			Class36 class36 = Class36.method531(anIntArray353[i]);
+			Class36 class36 = Class36.forId(primaryFrames[i]);
 			if(class36 != null)
-				j = anIntArray355[i] = class36.anInt636;
+				j = durations[i] = class36.anInt636;
 		}
 		if(j == 0)
 			j = 1;
 		return j;
 	}
 
-	private void readValues(Buffer stream)
-	{
-		do
-		{
-			int i = stream.readUnsignedByte();
-			if(i == 0)
-				break;
-			if(i == 1)
-			{
-				anInt352 = stream.readUnsignedByte();
-				anIntArray353 = new int[anInt352];
-				anIntArray354 = new int[anInt352];
-				anIntArray355 = new int[anInt352];
-				for(int j = 0; j < anInt352; j++)
-				{
-					anIntArray353[j] = stream.readUnsignedWord();
-					anIntArray354[j] = stream.readUnsignedWord();
-					if(anIntArray354[j] == 65535)
-						anIntArray354[j] = -1;
-					anIntArray355[j] = stream.readUnsignedWord();
+	private void readValues(Buffer stream) {
+		int i;
+		while ((i = stream.readUnsignedByte()) != 0) {
+
+			if (i == 1) {
+				anInt352 = stream.readUShort();
+				primaryFrames = new int[anInt352];
+				secondaryFrames = new int[anInt352];
+				durations = new int[anInt352];
+
+				for (int j = 0; j < anInt352; j++)
+					durations[j] = stream.readUShort();
+
+
+				for (int j = 0; j < anInt352; j++) {
+					primaryFrames[j] = stream.readUShort();
+					secondaryFrames[j] = -1;
 				}
 
-			} else
-			if(i == 2)
-				anInt356 = stream.readUnsignedWord();
-			else
-			if(i == 3)
-			{
+				for (int j = 0; j < anInt352; j++) {
+					primaryFrames[j] += stream.readUShort() << 16;
+				}
+			} else if (i == 2)
+				anInt356 = stream.readUShort();
+			else if (i == 3) {
 				int k = stream.readUnsignedByte();
 				anIntArray357 = new int[k + 1];
-				for(int l = 0; l < k; l++)
+				for (int l = 0; l < k; l++)
 					anIntArray357[l] = stream.readUnsignedByte();
-
-				anIntArray357[k] = 0x98967f;
-			} else
-			if(i == 4)
+				anIntArray357[k] = 9999999;
+			} else if (i == 4) {
 				aBoolean358 = true;
-			else
-			if(i == 5)
+			} else if (i == 5) {
 				anInt359 = stream.readUnsignedByte();
-			else
-			if(i == 6)
-				anInt360 = stream.readUnsignedWord();
-			else
-			if(i == 7)
-				anInt361 = stream.readUnsignedWord();
-			else
-			if(i == 8)
+			} else if (i == 6) {
+				anInt360 = stream.readUShort();
+			} else if (i == 7) {
+				anInt361 = stream.readUShort();
+			} else if (i == 8) {
 				anInt362 = stream.readUnsignedByte();
-			else
-			if(i == 9)
+			} else if (i == 9) {
 				anInt363 = stream.readUnsignedByte();
-			else
-			if(i == 10)
+			} else if (i == 10) {
 				anInt364 = stream.readUnsignedByte();
-			else
-			if(i == 11)
+			} else if (i == 11) {
 				anInt365 = stream.readUnsignedByte();
-			else
-			if(i == 12)
-				stream.readDWord();
-			else
-				System.out.println("Error unrecognised seq config code: " + i);
-		} while(true);
-		if(anInt352 == 0)
-		{
-			anInt352 = 1;
-			anIntArray353 = new int[1];
-			anIntArray353[0] = -1;
-			anIntArray354 = new int[1];
-			anIntArray354[0] = -1;
-			anIntArray355 = new int[1];
-			anIntArray355[0] = -1;
+			} else if (i == 12) {
+				int len = stream.readUnsignedByte();
+
+				for (int i1 = 0; i1 < len; i1++) {
+					stream.readUShort();
+				}
+
+				for (int i1 = 0; i1 < len; i1++) {
+					stream.readUShort();
+				}
+			} else if (i == 13) {
+				int var3 = stream.readUnsignedByte();
+				frameSounds = new int[var3];
+				for (int var4 = 0; var4 < var3; ++var4) {
+					frameSounds[var4] = stream.read24BitInt();
+					if (0 != frameSounds[var4]) {
+						int var6 = frameSounds[var4] >> 8;
+						int var8 = frameSounds[var4] >> 4 & 7;
+						int var9 = frameSounds[var4] & 15;
+						frameSounds[var4] = var6;
+					}
+				}
+			} else if (i == 14) {
+				skeletalId = stream.readInt();
+			} else if (i == 15) {
+				int count = stream.readUShort();
+				skeletalsoundEffect = new int[count];
+				skeletalsoundRange = new int[count];
+				for (int index = 0; index < count; ++index) {
+					skeletalsoundEffect[index] = stream.readUShort();
+					skeletalsoundRange[index] = stream.read24BitInt();
+				}
+			} else if (i == 16) {
+				skeletalRangeBegin = stream.readUShort();
+				skeletalRangeEnd = stream.readUShort();
+			} else if (i == 17) {
+				int count = stream.readUnsignedByte();
+				unknown = new int[count];
+				for (int index = 0; index < count; ++index) {
+					unknown[index] = stream.readUnsignedByte();
+				}
+			}
 		}
-		if(anInt363 == -1)
-			if(anIntArray357 != null)
+		if (anInt352 == 0) {
+			anInt352 = 1;
+			primaryFrames = new int[1];
+			primaryFrames[0] = -1;
+			secondaryFrames = new int[1];
+			secondaryFrames[0] = -1;
+			durations = new int[1];
+			durations[0] = -1;
+		}
+		if (anInt363 == -1)
+			if (anIntArray357 != null)
 				anInt363 = 2;
 			else
 				anInt363 = 0;
-		if(anInt364 == -1)
-		{
-			if(anIntArray357 != null)
-			{
+		if (anInt364 == -1) {
+			if (anIntArray357 != null) {
 				anInt364 = 2;
 				return;
 			}
@@ -137,9 +159,9 @@ public final class Animation {
 
 	public static Animation anims[];
 	public int anInt352;
-	public int anIntArray353[];
-	public int anIntArray354[];
-	private int[] anIntArray355;
+	public int primaryFrames[];
+	public int secondaryFrames[];
+	private int[] durations;
 	public int anInt356;
 	public int anIntArray357[];
 	public boolean aBoolean358;
@@ -149,6 +171,13 @@ public final class Animation {
 	public int anInt362;
 	public int anInt363;
 	public int anInt364;
+	public int frameSounds[];
+	private int skeletalRangeBegin = -1;
+	private int skeletalRangeEnd = -1;
+	private int skeletalId = -1;
+	private int[] skeletalsoundEffect;
+	private int[] unknown;
+	private int[] skeletalsoundRange;
 	public int anInt365;
 	public static int anInt367;
 }

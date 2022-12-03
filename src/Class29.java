@@ -20,8 +20,8 @@ final class Class29
 		anIntArray537 = new int[anInt535];
 		for(int i = 0; i < anInt535; i++)
 		{
-			anIntArray536[i] = stream.readUnsignedWord();
-			anIntArray537[i] = stream.readUnsignedWord();
+			anIntArray536[i] = stream.readUShort();
+			anIntArray537[i] = stream.readUShort();
 		}
 
 	}

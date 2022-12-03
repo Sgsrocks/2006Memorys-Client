@@ -7,7 +7,7 @@ public final class IDK {
 	public static void unpackConfig(StreamLoader streamLoader)
 	{
 		Buffer stream = new Buffer(streamLoader.getDataForName("idk.dat"));
-		length = stream.readUnsignedWord();
+		length = stream.readUShort();
 		if(cache == null)
 			cache = new IDK[length];
 		for(int j = 0; j < length; j++)
@@ -33,20 +33,20 @@ public final class IDK {
 				int j = stream.readUnsignedByte();
 				anIntArray658 = new int[j];
 				for(int k = 0; k < j; k++)
-					anIntArray658[k] = stream.readUnsignedWord();
+					anIntArray658[k] = stream.readUShort();
 
 			} else
 			if(i == 3)
 				aBoolean662 = true;
 			else
 			if(i >= 40 && i < 50)
-				anIntArray659[i - 40] = stream.readUnsignedWord();
+				anIntArray659[i - 40] = stream.readUShort();
 			else
 			if(i >= 50 && i < 60)
-				anIntArray660[i - 50] = stream.readUnsignedWord();
+				anIntArray660[i - 50] = stream.readUShort();
 			else
 			if(i >= 60 && i < 70)
-				anIntArray661[i - 60] = stream.readUnsignedWord();
+				anIntArray661[i - 60] = stream.readUShort();
 			else
 				System.out.println("Error unrecognised config code: " + i);
 		} while(true);

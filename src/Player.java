@@ -25,7 +25,7 @@ public final class Player extends Entity
 				Model model_3 = new Model(true, Class36.method532(super.anInt1521), false, model_2);
 				model_3.method475(0, -super.anInt1524, 0);
 				model_3.method469();
-				model_3.method470(spotAnim.aAnimation_407.anIntArray353[super.anInt1521]);
+				model_3.method470(spotAnim.aAnimation_407.primaryFrames[super.anInt1521]);
 				model_3.faceGroups = null;
 				model_3.vertexGroups = null;
 				if(spotAnim.anInt410 != 128 || spotAnim.anInt411 != 128)
@@ -104,7 +104,7 @@ public final class Player extends Entity
 			equipment[j] = (k << 8) + i1;
 			if(j == 0 && equipment[0] == 65535)
 			{
-				desc = EntityDef.forID(stream.readUnsignedWord());
+				desc = EntityDef.forID(stream.readUShort());
 				break;
 			}
 			if(equipment[j] >= 512 && equipment[j] - 512 < ItemDef.totalItems)
@@ -123,30 +123,30 @@ public final class Player extends Entity
 			anIntArray1700[l] = j1;
 		}
 
-		super.anInt1511 = stream.readUnsignedWord();
+		super.anInt1511 = stream.readUShort();
 		if(super.anInt1511 == 65535)
 			super.anInt1511 = -1;
-		super.anInt1512 = stream.readUnsignedWord();
+		super.anInt1512 = stream.readUShort();
 		if(super.anInt1512 == 65535)
 			super.anInt1512 = -1;
-		super.anInt1554 = stream.readUnsignedWord();
+		super.anInt1554 = stream.readUShort();
 		if(super.anInt1554 == 65535)
 			super.anInt1554 = -1;
-		super.anInt1555 = stream.readUnsignedWord();
+		super.anInt1555 = stream.readUShort();
 		if(super.anInt1555 == 65535)
 			super.anInt1555 = -1;
-		super.anInt1556 = stream.readUnsignedWord();
+		super.anInt1556 = stream.readUShort();
 		if(super.anInt1556 == 65535)
 			super.anInt1556 = -1;
-		super.anInt1557 = stream.readUnsignedWord();
+		super.anInt1557 = stream.readUShort();
 		if(super.anInt1557 == 65535)
 			super.anInt1557 = -1;
-		super.anInt1505 = stream.readUnsignedWord();
+		super.anInt1505 = stream.readUShort();
 		if(super.anInt1505 == 65535)
 			super.anInt1505 = -1;
 		name = TextClass.fixName(TextClass.nameForLong(stream.readQWord()));
 		combatLevel = stream.readUnsignedByte();
-		skill = stream.readUnsignedWord();
+		skill = stream.readUShort();
 		visible = true;
 		aLong1718 = 0L;
 		for(int k1 = 0; k1 < 12; k1++)
@@ -176,10 +176,10 @@ public final class Player extends Entity
 		{
 			int j = -1;
 			if(super.anim >= 0 && super.anInt1529 == 0)
-				j = Animation.anims[super.anim].anIntArray353[super.anInt1527];
+				j = Animation.anims[super.anim].primaryFrames[super.anInt1527];
 			else
 			if(super.anInt1517 >= 0)
-				j = Animation.anims[super.anInt1517].anIntArray353[super.anInt1518];
+				j = Animation.anims[super.anInt1517].primaryFrames[super.anInt1518];
 			Model model = desc.method164(-1, j, null);
 			return model;
 		}
@@ -191,9 +191,9 @@ public final class Player extends Entity
 		if(super.anim >= 0 && super.anInt1529 == 0)
 		{
 			Animation animation = Animation.anims[super.anim];
-			k = animation.anIntArray353[super.anInt1527];
+			k = animation.primaryFrames[super.anInt1527];
 			if(super.anInt1517 >= 0 && super.anInt1517 != super.anInt1511)
-				i1 = Animation.anims[super.anInt1517].anIntArray353[super.anInt1518];
+				i1 = Animation.anims[super.anInt1517].primaryFrames[super.anInt1518];
 			if(animation.anInt360 >= 0)
 			{
 				j1 = animation.anInt360;
@@ -206,7 +206,7 @@ public final class Player extends Entity
 			}
 		} else
 		if(super.anInt1517 >= 0)
-			k = Animation.anims[super.anInt1517].anIntArray353[super.anInt1518];
+			k = Animation.anims[super.anInt1517].primaryFrames[super.anInt1518];
 		Model model_1 = (Model) mruNodes.insertFromCache(l);
 		if(model_1 == null)
 		{

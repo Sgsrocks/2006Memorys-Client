@@ -8,9 +8,9 @@ public final class Background extends DrawingArea {
 	{
 		Buffer stream = new Buffer(streamLoader.getDataForName(s + ".dat"));
 		Buffer stream_1 = new Buffer(streamLoader.getDataForName("index.dat"));
-		stream_1.currentOffset = stream.readUnsignedWord();
-		anInt1456 = stream_1.readUnsignedWord();
-		anInt1457 = stream_1.readUnsignedWord();
+		stream_1.currentOffset = stream.readUShort();
+		anInt1456 = stream_1.readUShort();
+		anInt1457 = stream_1.readUShort();
 		int j = stream_1.readUnsignedByte();
 		anIntArray1451 = new int[j];
 		for(int k = 0; k < j - 1; k++)
@@ -19,14 +19,14 @@ public final class Background extends DrawingArea {
 		for(int l = 0; l < i; l++)
 		{
 			stream_1.currentOffset += 2;
-			stream.currentOffset += stream_1.readUnsignedWord() * stream_1.readUnsignedWord();
+			stream.currentOffset += stream_1.readUShort() * stream_1.readUShort();
 			stream_1.currentOffset++;
 		}
 
 		anInt1454 = stream_1.readUnsignedByte();
 		anInt1455 = stream_1.readUnsignedByte();
-		anInt1452 = stream_1.readUnsignedWord();
-		anInt1453 = stream_1.readUnsignedWord();
+		anInt1452 = stream_1.readUShort();
+		anInt1453 = stream_1.readUShort();
 		int i1 = stream_1.readUnsignedByte();
 		int j1 = anInt1452 * anInt1453;
 		aByteArray1450 = new byte[j1];

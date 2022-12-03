@@ -48,18 +48,18 @@ public final class Model extends Animable {
 		stream.currentOffset = abyte0.length - 18;
 		ModelHeader class21_1 = aClass21Array1661[j] = new ModelHeader();
 		class21_1.aByteArray368 = abyte0;
-		class21_1.anInt369 = stream.readUnsignedWord();
-		class21_1.anInt370 = stream.readUnsignedWord();
+		class21_1.anInt369 = stream.readUShort();
+		class21_1.anInt370 = stream.readUShort();
 		class21_1.anInt371 = stream.readUnsignedByte();
 		int k = stream.readUnsignedByte();
 		int l = stream.readUnsignedByte();
 		int i1 = stream.readUnsignedByte();
 		int j1 = stream.readUnsignedByte();
 		int k1 = stream.readUnsignedByte();
-		int l1 = stream.readUnsignedWord();
-		int i2 = stream.readUnsignedWord();
-		int j2 = stream.readUnsignedWord();
-		int k2 = stream.readUnsignedWord();
+		int l1 = stream.readUShort();
+		int i2 = stream.readUShort();
+		int j2 = stream.readUShort();
+		int k2 = stream.readUShort();
 		int l2 = 0;
 		class21_1.anInt372 = l2;
 		l2 += class21_1.anInt369;
@@ -809,7 +809,7 @@ public final class Model extends Animable {
 			return;
 		if(i == -1)
 			return;
-		Class36 class36 = Class36.method531(i);
+		Class36 class36 = Class36.forId(i);
 		if(class36 == null)
 			return;
 		Class18 class18 = class36.aClass18_637;
@@ -819,7 +819,7 @@ public final class Model extends Animable {
 		for(int k = 0; k < class36.anInt638; k++)
 		{
 			int l = class36.anIntArray639[k];
-			method472(class18.anIntArray342[l], class18.anIntArrayArray343[l], class36.anIntArray640[k], class36.anIntArray641[k], class36.anIntArray642[k]);
+			method472(class18.anIntArray342[l], class18.anIntArray343[l], class36.anIntArray640[k], class36.anIntArray641[k], class36.anIntArray642[k]);
 		}
 
 	}
@@ -833,10 +833,10 @@ public final class Model extends Animable {
 			method470(k);
 			return;
 		}
-		Class36 class36 = Class36.method531(k);
+		Class36 class36 = Class36.forId(k);
 		if(class36 == null)
 			return;
-		Class36 class36_1 = Class36.method531(j);
+		Class36 class36_1 = Class36.forId(j);
 		if(class36_1 == null)
 		{
 			method470(k);
@@ -853,7 +853,7 @@ public final class Model extends Animable {
 			int k1;
 			for(k1 = class36.anIntArray639[j1]; k1 > i1; i1 = ai[l++]);
 			if(k1 != i1 || class18.anIntArray342[k1] == 0)
-				method472(class18.anIntArray342[k1], class18.anIntArrayArray343[k1], class36.anIntArray640[j1], class36.anIntArray641[j1], class36.anIntArray642[j1]);
+				method472(class18.anIntArray342[k1], class18.anIntArray343[k1], class36.anIntArray640[j1], class36.anIntArray641[j1], class36.anIntArray642[j1]);
 		}
 
 		xAnimOffset = 0;
@@ -866,7 +866,7 @@ public final class Model extends Animable {
 			int i2;
 			for(i2 = class36_1.anIntArray639[l1]; i2 > i1; i1 = ai[l++]);
 			if(i2 == i1 || class18.anIntArray342[i2] == 0)
-				method472(class18.anIntArray342[i2], class18.anIntArrayArray343[i2], class36_1.anIntArray640[l1], class36_1.anIntArray641[l1], class36_1.anIntArray642[l1]);
+				method472(class18.anIntArray342[i2], class18.anIntArray343[i2], class36_1.anIntArray640[l1], class36_1.anIntArray641[l1], class36_1.anIntArray642[l1]);
 		}
 
 	}
