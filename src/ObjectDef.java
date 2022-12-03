@@ -79,8 +79,8 @@ stream = null;
 
 	public static void unpackConfig(StreamLoader streamLoader)
 	{
-		stream = new Stream(streamLoader.getDataForName("loc.dat"));
-		Stream stream = new Stream(streamLoader.getDataForName("loc.idx"));
+		stream = new Buffer(streamLoader.getDataForName("loc.dat"));
+		Buffer stream = new Buffer(streamLoader.getDataForName("loc.idx"));
 		int totalObjects = stream.readUnsignedWord();
 		streamIndices = new int[totalObjects];
 		int i = 2;
@@ -267,12 +267,12 @@ stream = null;
 			model_3.method475(anInt738, anInt745, anInt783);
 		model_3.method479(64 + aByte737, 768 + aByte742 * 5, -50, -10, -50, !aBoolean769);
 		if(anInt760 == 1)
-			model_3.itemDropHeightAnInt = model_3.modelHeight;
+			model_3.itemDropHeight = model_3.modelHeight;
 		mruNodes2.removeFromCache(model_3, l1);
 		return model_3;
 	}
 
-	private void readValues(Stream stream)
+	private void readValues(Buffer stream)
 	{
 		int i = -1;
 label0:
@@ -485,7 +485,7 @@ label0:
 	public int anInt749;
 	private boolean aBoolean751;
 	public static boolean lowMem;
-	private static Stream stream;
+	private static Buffer stream;
 	public int type;
 	private static int[] streamIndices;
 	public boolean aBoolean757;

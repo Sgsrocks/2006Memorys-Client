@@ -204,7 +204,7 @@ final class ObjectManager {
 								}
 								int i22 = 0;
 								if(j21 != -1)
-									i22 = Texture.anIntArray1482[method187(k21, 96)];
+									i22 = Texture.hslToRgb[method187(k21, 96)];
 								if(i19 == 0)
 								{
 									worldController.method279(l, l6, k17, 0, 0, -1, j19, k19, l19, i20, method187(j21, j20), method187(j21, k20), method187(j21, l20), method187(j21, i21), 0, 0, 0, 0, i22, 0);
@@ -229,7 +229,7 @@ final class ObjectManager {
 									} else
 									{
 										j23 = method177(flo_2.anInt394, flo_2.anInt395, flo_2.anInt396);
-										k23 = Texture.anIntArray1482[method185(flo_2.anInt399, 96)];
+										k23 = Texture.hslToRgb[method185(flo_2.anInt399, 96)];
 									}
 									worldController.method279(l, l6, k17, k22, byte4, i23, j19, k19, l19, i20, method187(j21, j20), method187(j21, k20), method187(j21, l20), method187(j21, i21), method185(j23, j20), method185(j23, k20), method185(j23, l20), method185(j23, i21), i22, k23);
 								}
@@ -420,7 +420,7 @@ label5:
 		return k;
 	}
 
-	public static void method173(Stream stream, OnDemandFetcher class42_sub1)
+	public static void method173(Buffer stream, OnDemandFetcher class42_sub1)
 	{
 label0:
 		{
@@ -852,7 +852,7 @@ label0:
 					aclass11[k1].anIntArrayArray294[l + i2][l1 + j2] &= 0xfeffffff;
 
 		}
-		Stream stream = new Stream(abyte0);
+		Buffer stream = new Buffer(abyte0);
 		for(int l2 = 0; l2 < 4; l2++)
 		{
 			for(int i3 = 0; i3 < 64; i3++)
@@ -883,7 +883,7 @@ label0:
 
 		}
 
-		Stream stream = new Stream(abyte0);
+		Buffer stream = new Buffer(abyte0);
 		for(int l1 = 0; l1 < 4; l1++)
 		{
 			for(int i2 = 0; i2 < 64; i2++)
@@ -896,8 +896,8 @@ label0:
 		}
 	}
 
-	private void method181(int i, int j, Stream stream, int k, int l, int i1,
-								 int k1)
+	private void method181(int i, int j, Buffer stream, int k, int l, int i1,
+						   int k1)
 	{
 		if(k >= 0 && k < 104 && i >= 0 && i < 104)
 		{
@@ -972,7 +972,7 @@ label0:
 	{
 label0:
 		{
-			Stream stream = new Stream(abyte0);
+			Buffer stream = new Buffer(abyte0);
 			int l1 = -1;
 			do
 			{
@@ -1282,7 +1282,7 @@ label0:
   ) //xxx bad method, decompiled with JODE
   {
 	boolean bool = true;
-	Stream stream = new Stream(is);
+	Buffer stream = new Buffer(is);
 	int i_252_ = -1;
 	for (;;)
 	  {
@@ -1332,7 +1332,7 @@ label0:
 	{
 label0:
 		{
-			Stream stream = new Stream(abyte0);
+			Buffer stream = new Buffer(abyte0);
 			int l = -1;
 			do
 			{

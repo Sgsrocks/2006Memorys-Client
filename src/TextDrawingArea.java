@@ -57,8 +57,8 @@ public final class TextDrawingArea extends DrawingArea {
 	anIntArray1496 = new int[256];
 	aRandom1498 = new Random();
 	aBoolean1499 = false;
-	Stream stream = new Stream(streamLoader.getDataForName(s + ".dat"));
-	Stream stream_1 = new Stream(streamLoader.getDataForName("index.dat"));
+	Buffer stream = new Buffer(streamLoader.getDataForName(s + ".dat"));
+	Buffer stream_1 = new Buffer(streamLoader.getDataForName("index.dat"));
 	stream_1.currentOffset = stream.readUnsignedWord() + 4;
 	int k = stream_1.readUnsignedByte();
 	if(k > 0)

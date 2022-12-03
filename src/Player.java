@@ -83,7 +83,7 @@ public final class Player extends Entity
 		return model;
 	}
 
-	public void updatePlayer(Stream stream)
+	public void updatePlayer(Buffer stream)
 	{
 		stream.currentOffset = 0;
 		anInt1702 = stream.readUnsignedByte();
@@ -273,7 +273,7 @@ public final class Player extends Entity
 		}
 		if(aBoolean1699)
 			return model_1;
-		Model model_2 = Model.aModel_1621;
+		Model model_2 = Model.EMPTY_MODEL;
 		model_2.method464(model_1, Class36.method532(k) & Class36.method532(i1));
 		if(k != -1 && i1 != -1)
 			model_2.method471(Animation.anims[super.anim].anIntArray357, i1, k);

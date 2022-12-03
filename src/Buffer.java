@@ -5,17 +5,17 @@
 import java.math.BigInteger;
 import sign.signlink;
 
-public final class Stream extends NodeSub {
+public final class Buffer extends NodeSub {
 
-	public static Stream create()
+	public static Buffer create()
 	{
 		synchronized(nodeList)
 		{
-			Stream stream = null;
+			Buffer stream = null;
 			if(anInt1412 > 0)
 			{
 				anInt1412--;
-				stream = (Stream) nodeList.popHead();
+				stream = (Buffer) nodeList.popHead();
 			}
 			if(stream != null)
 			{
@@ -23,17 +23,17 @@ public final class Stream extends NodeSub {
 				return stream;
 			}
 		}
-		Stream stream_1 = new Stream();
+		Buffer stream_1 = new Buffer();
 		stream_1.currentOffset = 0;
 		stream_1.buffer = new byte[5000];
 		return stream_1;
 	}
 
-	private Stream()
+	private Buffer()
 	{
 	}
 
-	public Stream(byte abyte0[])
+	public Buffer(byte abyte0[])
 	{
 		buffer = abyte0;
 			currentOffset = 0;
@@ -189,7 +189,13 @@ public final class Stream extends NodeSub {
 		for(int l = j; l < j + i; l++)
 			abyte0[l] = buffer[currentOffset++];
 	}
-
+	public byte readByte() {
+		return this.buffer[++this.currentOffset - 1];
+	}
+	public int readInt() {
+		currentOffset += 4;
+		return ((buffer[currentOffset - 4] & 0xff) << 24) + ((buffer[currentOffset - 3] & 0xff) << 16) + ((buffer[currentOffset - 2] & 0xff) << 8) + (buffer[currentOffset - 1] & 0xff);
+	}
 	public void initBitAccess()
 	{
 		bitPosition = currentOffset * 8;
@@ -218,7 +224,7 @@ public final class Stream extends NodeSub {
 		currentOffset = (bitPosition + 7) / 8;
 	}
 
-	public int method421()
+	public int readSmart()
 	{
 		int i = buffer[currentOffset] & 0xff;
 		if(i < 128)
@@ -377,6 +383,10 @@ public final class Stream extends NodeSub {
 	public ISAACRandomGen encryption;
 	private static int anInt1412;
 	private static final NodeList nodeList = new NodeList();
+
+	public void setOffset(int i) {
+		currentOffset = i;
+	}
 
 	//removed useless static initializer
 }

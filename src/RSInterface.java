@@ -15,7 +15,7 @@ public final class RSInterface {
 
 	public static void unpack(StreamLoader streamLoader, TextDrawingArea textDrawingAreas[], StreamLoader streamLoader_1) {
 		aMRUNodes_238 = new MRUNodes(50000);
-		Stream stream = new Stream(streamLoader.getDataForName("data"));
+		Buffer stream = new Buffer(streamLoader.getDataForName("data"));
 		int i = -1;
 		int j = stream.readUnsignedWord();
 		interfaceCache = new RSInterface[j + 10000];

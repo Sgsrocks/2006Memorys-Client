@@ -78,8 +78,8 @@ public final class EntityDef
 
 	public static void unpackConfig(StreamLoader streamLoader)
 	{
-		stream = new Stream(streamLoader.getDataForName("npc.dat"));
-		Stream stream2 = new Stream(streamLoader.getDataForName("npc.idx"));
+		stream = new Buffer(streamLoader.getDataForName("npc.dat"));
+		Buffer stream2 = new Buffer(streamLoader.getDataForName("npc.idx"));
 		int totalNPCs = stream2.readUnsignedWord();
 		streamIndices = new int[totalNPCs];
 		int i = 2;
@@ -141,7 +141,7 @@ public final class EntityDef
 			model.method479(64 + anInt85, 850 + anInt92, -30, -50, -30, true);
 			mruNodes.removeFromCache(model, type);
 		}
-		Model model_1 = Model.aModel_1621;
+		Model model_1 = Model.EMPTY_MODEL;
 		model_1.method464(model, Class36.method532(k) & Class36.method532(j));
 		if(k != -1 && j != -1)
 			model_1.method471(ai, j, k);
@@ -158,7 +158,7 @@ public final class EntityDef
 		return model_1;
 	}
 
-	private void readValues(Stream stream)
+	private void readValues(Buffer stream)
 	{
 		do
 		{
@@ -309,7 +309,7 @@ public final class EntityDef
 	private int anInt57;
 	public int anInt58;
 	private int anInt59;
-	private static Stream stream;
+	private static Buffer stream;
 	public int combatLevel;
 	private final int anInt64;
 	public String name;

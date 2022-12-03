@@ -128,7 +128,7 @@ public final class OnDemandFetcher extends OnDemandFetcherParent
 		{
 			byte abyte0[] = streamLoader.getDataForName(as[i]);
 			int j = abyte0.length / 2;
-			Stream stream = new Stream(abyte0);
+			Buffer stream = new Buffer(abyte0);
 			versions[i] = new int[j];
 			fileStatus[i] = new byte[j];
 			for(int l = 0; l < j; l++)
@@ -143,7 +143,7 @@ public final class OnDemandFetcher extends OnDemandFetcherParent
 		{
 			byte abyte1[] = streamLoader.getDataForName(as1[k]);
 			int i1 = abyte1.length / 4;
-			Stream stream_1 = new Stream(abyte1);
+			Buffer stream_1 = new Buffer(abyte1);
 			crcs[k] = new int[i1];
 			for(int l1 = 0; l1 < i1; l1++)
 				crcs[k][l1] = stream_1.readDWord();
@@ -160,7 +160,7 @@ public final class OnDemandFetcher extends OnDemandFetcherParent
 				modelIndices[k1] = 0;
 
 		abyte2 = streamLoader.getDataForName("map_index");
-		Stream stream2 = new Stream(abyte2);
+		Buffer stream2 = new Buffer(abyte2);
 		j1 = abyte2.length / 7;
 		mapIndices1 = new int[j1];
 		mapIndices2 = new int[j1];
@@ -175,14 +175,14 @@ public final class OnDemandFetcher extends OnDemandFetcherParent
 		}
 
 		abyte2 = streamLoader.getDataForName("anim_index");
-		stream2 = new Stream(abyte2);
+		stream2 = new Buffer(abyte2);
 		j1 = abyte2.length / 2;
 		anIntArray1360 = new int[j1];
 		for(int j2 = 0; j2 < j1; j2++)
 			anIntArray1360[j2] = stream2.readUnsignedWord();
 
 		abyte2 = streamLoader.getDataForName("midi_index");
-		stream2 = new Stream(abyte2);
+		stream2 = new Buffer(abyte2);
 		j1 = abyte2.length;
 		anIntArray1348 = new int[j1];
 		for(int k2 = 0; k2 < j1; k2++)

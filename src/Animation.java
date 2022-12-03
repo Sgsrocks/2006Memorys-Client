@@ -6,7 +6,7 @@ public final class Animation {
 
 	public static void unpackConfig(StreamLoader streamLoader)
 	{
-		Stream stream = new Stream(streamLoader.getDataForName("seq.dat"));
+		Buffer stream = new Buffer(streamLoader.getDataForName("seq.dat"));
 		int length = stream.readUnsignedWord();
 		if(anims == null)
 			anims = new Animation[length];
@@ -32,7 +32,7 @@ public final class Animation {
 		return j;
 	}
 
-	private void readValues(Stream stream)
+	private void readValues(Buffer stream)
 	{
 		do
 		{

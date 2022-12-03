@@ -11,10 +11,10 @@ final class Sounds
     {
     }
 
-    public static void unpack(Stream stream)
+    public static void unpack(Buffer stream)
     {
         aByteArray327 = new byte[0x6baa8];
-        aStream_328 = new Stream(aByteArray327);
+        aStream_328 = new Buffer(aByteArray327);
         Class6.method166();
         do
         {
@@ -27,7 +27,7 @@ final class Sounds
         } while(true);
     }
 
-    public static Stream method241(int i, int j)
+    public static Buffer method241(int i, int j)
     {
         if(aSoundsArray325s[j] != null)
         {
@@ -39,7 +39,7 @@ final class Sounds
         }
     }
 
-    private void method242(Stream stream)
+    private void method242(Buffer stream)
     {
         for(int i = 0; i < 10; i++)
         {
@@ -79,7 +79,7 @@ final class Sounds
         return i;
     }
 
-    private Stream method244(int i)
+    private Buffer method244(int i)
     {
         int j = method245(i);
         aStream_328.currentOffset = 0;
@@ -153,7 +153,7 @@ final class Sounds
     private static final Sounds aSoundsArray325s[] = new Sounds[5000];
     public static final int anIntArray326[] = new int[5000];
     private static byte aByteArray327[];
-    private static Stream aStream_328;
+    private static Buffer aStream_328;
     private final Class6 aClass6Array329[] = new Class6[10];
     private int anInt330;
     private int anInt331;

@@ -5,7 +5,7 @@
 public final class Class18
 {
 
-	public Class18(Stream stream)
+	public Class18(Buffer stream)
 	{
 		int anInt341 = stream.readUnsignedByte();
 		anIntArray342 = new int[anInt341];

@@ -6,7 +6,7 @@ public final class Flo {
 
 	public static void unpackConfig(StreamLoader streamLoader)
 	{
-		Stream stream = new Stream(streamLoader.getDataForName("flo.dat"));
+		Buffer stream = new Buffer(streamLoader.getDataForName("flo.dat"));
 		int cacheSize = stream.readUnsignedWord();
 		if(cache == null)
 			cache = new Flo[cacheSize];
@@ -19,7 +19,7 @@ public final class Flo {
 
 	}
 
-	private void readValues(Stream stream)
+	private void readValues(Buffer stream)
 	{
 		do
 		{

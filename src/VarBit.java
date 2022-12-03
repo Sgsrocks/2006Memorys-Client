@@ -6,7 +6,7 @@ public final class VarBit {
 
 	public static void unpackConfig(StreamLoader streamLoader)
 	{
-		Stream stream = new Stream(streamLoader.getDataForName("varbit.dat"));
+		Buffer stream = new Buffer(streamLoader.getDataForName("varbit.dat"));
 		int cacheSize = stream.readUnsignedWord();
 		if(cache == null)
 			cache = new VarBit[cacheSize];
@@ -23,7 +23,7 @@ public final class VarBit {
 			System.out.println("varbit load mismatch");
 	}
 
-	private void readValues(Stream stream)
+	private void readValues(Buffer stream)
 	{
 		do
 		{

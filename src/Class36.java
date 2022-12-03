@@ -16,26 +16,26 @@ public final class Class36
 
 	public static void method529(byte abyte0[])
 	{
-		Stream stream = new Stream(abyte0);
+		Buffer stream = new Buffer(abyte0);
 		stream.currentOffset = abyte0.length - 8;
 		int i = stream.readUnsignedWord();
 		int j = stream.readUnsignedWord();
 		int k = stream.readUnsignedWord();
 		int l = stream.readUnsignedWord();
 		int i1 = 0;
-		Stream stream_1 = new Stream(abyte0);
+		Buffer stream_1 = new Buffer(abyte0);
 		stream_1.currentOffset = i1;
 		i1 += i + 2;
-		Stream stream_2 = new Stream(abyte0);
+		Buffer stream_2 = new Buffer(abyte0);
 		stream_2.currentOffset = i1;
 		i1 += j;
-		Stream stream_3 = new Stream(abyte0);
+		Buffer stream_3 = new Buffer(abyte0);
 		stream_3.currentOffset = i1;
 		i1 += k;
-		Stream stream_4 = new Stream(abyte0);
+		Buffer stream_4 = new Buffer(abyte0);
 		stream_4.currentOffset = i1;
 		i1 += l;
-		Stream stream_5 = new Stream(abyte0);
+		Buffer stream_5 = new Buffer(abyte0);
 		stream_5.currentOffset = i1;
 		Class18 class18 = new Class18(stream_5);
 		int k1 = stream_1.readUnsignedWord();
@@ -77,15 +77,15 @@ public final class Class36
 					if(class18.anIntArray342[i3] == 3)
 						c = '\200';
 					if((j3 & 1) != 0)
-						ai1[l2] = stream_3.method421();
+						ai1[l2] = stream_3.readSmart();
 					else
 						ai1[l2] = c;
 					if((j3 & 2) != 0)
-						ai2[l2] = stream_3.method421();
+						ai2[l2] = stream_3.readSmart();
 					else
 						ai2[l2] = c;
 					if((j3 & 4) != 0)
-						ai3[l2] = stream_3.method421();
+						ai3[l2] = stream_3.readSmart();
 					else
 						ai3[l2] = c;
 					k2 = i3;

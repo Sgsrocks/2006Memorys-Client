@@ -5,7 +5,7 @@
 final class Class29
 {
 
-	public void method325(Stream stream)
+	public void method325(Buffer stream)
 	{
 		anInt540 = stream.readUnsignedByte();
 			anInt538 = stream.readDWord();
@@ -13,7 +13,7 @@ final class Class29
 			method326(stream);
 	}
 
-	public void method326(Stream stream)
+	public void method326(Buffer stream)
 	{
 		anInt535 = stream.readUnsignedByte();
 		anIntArray536 = new int[anInt535];

@@ -5,11 +5,7 @@
 import java.applet.AppletContext;
 import java.awt.*;
 import java.io.*;
-import java.math.BigInteger;
-import javax.sound.midi.*;
-import javax.sound.sampled.*;
 import java.net.*;
-import java.util.zip.CRC32;
 
 import sign.signlink;
 
@@ -240,6 +236,75 @@ public class client extends RSApplet {
         }
     }
 
+	public String indexLocation(int cacheIndex, int index) {
+		return "D:\\dump\\index" + cacheIndex + "/" + (index != -1 ? index + ".gz" : "");
+	}
+
+	public void repackCacheAll() {
+		for (int index = 0; index < 10; index++) {
+			try {
+				repackCacheIndex(index);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		//packCustomMaps();
+		//packCustomModels();
+		//packCustomAnimations();
+	}
+
+	public byte[] fileToByteArray(File file) {
+		try {
+			byte[] fileData = new byte[(int) file.length()];
+			FileInputStream fis = new FileInputStream(file);
+			fis.read(fileData);
+			fis.close();
+			return fileData;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	public void repackCacheIndex(int cacheIndex) {
+		if (!new File(indexLocation(cacheIndex, -1)).exists()) {
+			System.out.println("No index data found for: " + cacheIndex);
+			return;
+		}
+
+		System.out.println("Started repacking index " + cacheIndex + ".");
+		int indexLength = new File(indexLocation(cacheIndex, -1)).listFiles().length;
+		File[] file = new File(indexLocation(cacheIndex, -1)).listFiles();
+		int packed = 0;
+		try {
+			for (int index = 0; index < indexLength; index++) {
+				if (file[index] != null) {
+					if (pack(file[index], cacheIndex)) {
+						packed++;
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Error packing index " + cacheIndex + ".");
+		}
+
+		System.out.println("Packed " + (packed + "/" + indexLength) + " files to index " + cacheIndex + ".");
+	}
+	public boolean pack(File file, int cacheIndex) {
+		int fileIndex = Integer.parseInt(getFileNameWithoutExtension(file.toString()));
+		byte[] data = fileToByteArray(file);
+		if (data != null && data.length > 0) {
+			decompressors[cacheIndex].method234(data.length, data, fileIndex);
+			System.out.println("Packed " + file.toString() + " to index " + cacheIndex);
+			return true;
+		} else {
+			System.out.println("No file to pack: " + file);
+			return false;
+		}
+	}
 	public void startRunnable(Runnable runnable, int i)
 	{
 		if(i > 10)
@@ -1076,7 +1141,7 @@ public class client extends RSApplet {
 		DrawingArea.method339(l + 14 + l1 + k1, anInt927, 15, i1 + 1);
 	}
 
-	private void updateNPCs(Stream stream, int i)
+	private void updateNPCs(Buffer stream, int i)
 	{
 		anInt839 = 0;
 		anInt893 = 0;
@@ -1625,9 +1690,9 @@ public class client extends RSApplet {
 	{
 		if(!lowMem)
 		{
-			if(Texture.anIntArray1480[17] >= j)
+			if(Texture.textureLastUsed[17] >= j)
 			{
-				Background background = Texture.aBackgroundArray1474s[17];
+				Background background = Texture.textures[17];
 				int k = background.anInt1452 * background.anInt1453 - 1;
 				int j1 = background.anInt1452 * anInt945 * 2;
 				byte abyte0[] = background.aByteArray1450;
@@ -1659,9 +1724,9 @@ public class client extends RSApplet {
 					stream.writeBytes(stream.currentOffset - l2);
 				}
 			}
-			if(Texture.anIntArray1480[24] >= j)
+			if(Texture.textureLastUsed[24] >= j)
 			{
-				Background background_1 = Texture.aBackgroundArray1474s[24];
+				Background background_1 = Texture.textures[24];
 				int l = background_1.anInt1452 * background_1.anInt1453 - 1;
 				int k1 = background_1.anInt1452 * anInt945 * 2;
 				byte abyte1[] = background_1.aByteArray1450;
@@ -1673,9 +1738,9 @@ public class client extends RSApplet {
 				aByteArray912 = abyte1;
 				Texture.method370(24);
 			}
-			if(Texture.anIntArray1480[40] >= j)
+			if(Texture.textureLastUsed[40] >= j)
 			{
-				Background background_2 = Texture.aBackgroundArray1474s[40];
+				Background background_2 = Texture.textures[40];
 				int i1 = background_2.anInt1452 * background_2.anInt1453 - 1;
 				int l1 = background_2.anInt1452 * anInt945 * 2;
 				byte abyte2[] = background_2.aByteArray1450;
@@ -1973,7 +2038,7 @@ public class client extends RSApplet {
 
 	}
 
-	private void method46(int i, Stream stream)
+	private void method46(int i, Buffer stream)
 	{
 		while(stream.bitPosition + 21 < i * 8)
 		{
@@ -2181,7 +2246,7 @@ public class client extends RSApplet {
 		return false;
 	}
 
-	private void method49(Stream stream)
+	private void method49(Buffer stream)
 	{
 		for(int j = 0; j < anInt893; j++)
 		{
@@ -2668,7 +2733,7 @@ public class client extends RSApplet {
 
 				}
 			} while(onDemandData.dataType != 93 || !onDemandFetcher.method564(onDemandData.ID));
-			ObjectManager.method173(new Stream(onDemandData.buffer), onDemandFetcher);
+			ObjectManager.method173(new Buffer(onDemandData.buffer), onDemandFetcher);
 		} while(true);
 	}
 
@@ -3315,7 +3380,7 @@ public class client extends RSApplet {
 				DataInputStream datainputstream = openJagGrabInputStream(s1 + j);
 				byte abyte1[] = new byte[6];
 				datainputstream.readFully(abyte1, 0, 6);
-				Stream stream = new Stream(abyte1);
+				Buffer stream = new Buffer(abyte1);
 				stream.currentOffset = 3;
 				int i2 = stream.read3Bytes() + 6;
 				int j2 = 6;
@@ -4356,7 +4421,7 @@ public class client extends RSApplet {
 		int j = -1;
 		for(int k = 0; k < Model.anInt1687; k++)
 		{
-			int l = Model.anIntArray1688[k];
+			int l = Model.obj_key[k];
 			int i1 = l & 0x7f;
 			int j1 = l >> 7 & 0x7f;
 			int k1 = l >> 29 & 3;
@@ -5769,8 +5834,8 @@ public class client extends RSApplet {
 		if(l > 4225 && l < 0x15f90)
 		{
 			int i1 = minimapInt1 + minimapInt2 & 0x7ff;
-			int j1 = Model.modelIntArray1[i1];
-			int k1 = Model.modelIntArray2[i1];
+			int j1 = Model.SINE[i1];
+			int k1 = Model.COSINE[i1];
 			j1 = (j1 * 256) / (minimapInt3 + 256);
 			k1 = (k1 * 256) / (minimapInt3 + 256);
 			int l1 = j * j1 + k * k1 >> 16;
@@ -6443,7 +6508,7 @@ public class client extends RSApplet {
 		return i != 1;
 	}
 
-	private void method86(Stream stream)
+	private void method86(Buffer stream)
 	{
 		for(int j = 0; j < anInt893; j++)
 		{
@@ -6753,7 +6818,7 @@ public class client extends RSApplet {
 	                            flag = true;
 	                    } else
 	                    {
-	                        Stream stream1 = Sounds.method241(anIntArray1241[i], anIntArray1207[i]);
+	                        Buffer stream1 = Sounds.method241(anIntArray1241[i], anIntArray1207[i]);
 	                        if(System.currentTimeMillis() + (long)(stream1.currentOffset / 22) > aLong1172 + (long)(anInt1257 / 22))
 	                        {
 	                            anInt1257 = stream1.currentOffset;
@@ -6814,7 +6879,7 @@ public class client extends RSApplet {
 			drawLoadingText(20, "Connecting to web server");
 			try {
 				DataInputStream datainputstream = openJagGrabInputStream("crc" + (int) (Math.random() * 99999999D) + "-" + 317);
-				Stream class30_sub2_sub2 = new Stream(new byte[40]);
+				Buffer class30_sub2_sub2 = new Buffer(new byte[40]);
 				datainputstream.readFully(class30_sub2_sub2.buffer, 0, 40);
 				datainputstream.close();
 				for (int i1 = 0; i1 < 9; i1++) {
@@ -6871,7 +6936,7 @@ public class client extends RSApplet {
 	void startUp()
 	{
 		drawLoadingText(20, "Starting up");
-		new CacheDownloader(this).downloadCache();
+		//new CacheDownloader(this).downloadCache();
 		if(signlink.sunjava)
 			super.minDelay = 5;
 		if(aBoolean993)
@@ -6914,7 +6979,7 @@ public class client extends RSApplet {
 			onDemandFetcher.start(streamLoader_6, this);
 			Class36.method528(onDemandFetcher.getAnimCount());
 			Model.method459(onDemandFetcher.getVersionCount(0), onDemandFetcher);
-			preloadModels();
+		repackCacheIndex(1);
 			if(!lowMem)
 			{
 				nextSong = 0;
@@ -7157,7 +7222,7 @@ public class client extends RSApplet {
 			{
 				drawLoadingText(90, "Unpacking sounds");
 				byte abyte0[] = streamLoader_5.getDataForName("sounds.dat");
-				Stream stream = new Stream(abyte0);
+				Buffer stream = new Buffer(abyte0);
 				Sounds.unpack(stream);
 			}
 			drawLoadingText(95, "Unpacking interfaces");
@@ -7241,7 +7306,7 @@ public class client extends RSApplet {
 		loadingError = true;
 	}
 
-	private void method91(Stream stream, int i)
+	private void method91(Buffer stream, int i)
 	{
 		while(stream.bitPosition + 10 < i * 8)
 		{
@@ -8232,7 +8297,7 @@ public class client extends RSApplet {
 		}
 	}
 
-	private void method107(int i, int j, Stream stream, Player player)
+	private void method107(int i, int j, Buffer stream, Player player)
 	{
 		if((i & 0x400) != 0)
 		{
@@ -8363,7 +8428,7 @@ public class client extends RSApplet {
 		{
 			int j1 = stream.method427();
 			byte abyte0[] = new byte[j1];
-			Stream stream_1 = new Stream(abyte0);
+			Buffer stream_1 = new Buffer(abyte0);
 			stream.readBytes(j1, 0, abyte0);
 			aStreamArray895s[j] = stream_1;
 			player.updatePlayer(stream_1);
@@ -8798,7 +8863,7 @@ public class client extends RSApplet {
 		}
 	}
 
-	private void method117(Stream stream)
+	private void method117(Buffer stream)
 	{
 		stream.initBitAccess();
 		int j = stream.readBits(1);
@@ -9306,10 +9371,10 @@ public class client extends RSApplet {
 		i -= xCameraPos;
 		i1 -= zCameraPos;
 		l -= yCameraPos;
-		int j1 = Model.modelIntArray1[yCameraCurve];
-		int k1 = Model.modelIntArray2[yCameraCurve];
-		int l1 = Model.modelIntArray1[xCameraCurve];
-		int i2 = Model.modelIntArray2[xCameraCurve];
+		int j1 = Model.SINE[yCameraCurve];
+		int k1 = Model.COSINE[yCameraCurve];
+		int l1 = Model.SINE[xCameraCurve];
+		int i2 = Model.COSINE[xCameraCurve];
 		int j2 = l * l1 + i * i2 >> 16;
 		l = l * i2 - i * l1 >> 16;
 		i = j2;
@@ -9559,7 +9624,7 @@ public class client extends RSApplet {
 		aRSImageProducer_1111.drawGraphics(0, super.graphics, 637);
 	}
 
-	private void method134(Stream stream)
+	private void method134(Buffer stream)
 	{
 		int j = stream.readBits(8);
 		if(j < playerCount)
@@ -9740,7 +9805,7 @@ public class client extends RSApplet {
 		welcomeScreenRaised = true;
 	}
 
-	private void method137(Stream stream1, int i)
+	private void method137(Buffer stream1, int i)
     {
         if(i == 84)
         {
@@ -10060,7 +10125,7 @@ public class client extends RSApplet {
 		ObjectDef.lowMem = true;
 	}
 
-	private void method139(Stream stream)
+	private void method139(Buffer stream)
 	{
 		stream.initBitAccess();
 		int k = stream.readBits(8);
@@ -10229,8 +10294,8 @@ public class client extends RSApplet {
 		int l = i * i + j * j;
 		if(l > 6400)
 			return;
-		int i1 = Model.modelIntArray1[k];
-		int j1 = Model.modelIntArray2[k];
+		int i1 = Model.SINE[k];
+		int j1 = Model.COSINE[k];
 		i1 = (i1 * 256) / (minimapInt3 + 256);
 		j1 = (j1 * 256) / (minimapInt3 + 256);
 		int k1 = j * i1 + i * j1 >> 16;
@@ -10300,7 +10365,7 @@ public class client extends RSApplet {
 		}
 	}
 
-	private void updatePlayers(int i, Stream stream)
+	private void updatePlayers(int i, Buffer stream)
 	{
 		anInt839 = 0;
 		anInt893 = 0;
@@ -10338,8 +10403,8 @@ public class client extends RSApplet {
 		int l2 = j;
 		if(l1 != 0)
 		{
-			int i3 = Model.modelIntArray1[l1];
-			int k3 = Model.modelIntArray2[l1];
+			int i3 = Model.SINE[l1];
+			int k3 = Model.COSINE[l1];
 			int i4 = k2 * k3 - l2 * i3 >> 16;
 			l2 = k2 * i3 + l2 * k3 >> 16;
 			k2 = i4;
@@ -10358,8 +10423,8 @@ public class client extends RSApplet {
 			  l2 = fwdbwd;
 			}
 */
-			int j3 = Model.modelIntArray1[i2];
-			int l3 = Model.modelIntArray2[i2];
+			int j3 = Model.SINE[i2];
+			int l3 = Model.COSINE[i2];
 			int j4 = l2 * j3 + j2 * l3 >> 16;
 			l2 = l2 * l3 - j2 * j3 >> 16;
 			j2 = j4;
@@ -11655,7 +11720,7 @@ public class client extends RSApplet {
 				}
 			}
 
-		int k2 = Texture.anInt1481;
+		int k2 = Texture.lastTextureRetrievalCount;
 		Model.aBoolean1684 = true;
 			Model.anInt1687 = 0;
 			Model.anInt1685 = super.mouseX - 4;
@@ -11707,11 +11772,11 @@ public class client extends RSApplet {
 		friendsNodeIDs = new int[200];
 		groundArray = new NodeList[4][104][104];
 		aBoolean831 = false;
-		aStream_834 = new Stream(new byte[5000]);
+		aStream_834 = new Buffer(new byte[5000]);
 		npcArray = new NPC[16384];
 		npcIndices = new int[16384];
 		anIntArray840 = new int[1000];
-		aStream_847 = Stream.create();
+		aStream_847 = Buffer.create();
 		aBoolean848 = true;
 		openInterfaceID = -1;
 		currentExp = new int[Skills.skillsCount];
@@ -11729,7 +11794,7 @@ public class client extends RSApplet {
 		playerArray = new Player[maxPlayers];
 		playerIndices = new int[maxPlayers];
 		anIntArray894 = new int[maxPlayers];
-		aStreamArray895s = new Stream[maxPlayers];
+		aStreamArray895s = new Buffer[maxPlayers];
 		anInt897 = 1;
 		anIntArrayArray901 = new int[104][104];
 		anInt902 = 0x766654;
@@ -11793,7 +11858,7 @@ public class client extends RSApplet {
 		anIntArray1073 = new int[1000];
 		aBoolean1080 = false;
 		friendsList = new String[200];
-		inStream = Stream.create();
+		inStream = Buffer.create();
 		expectedCRCs = new int[9];
 		menuActionCmd2 = new int[500];
 		menuActionCmd3 = new int[500];
@@ -11826,7 +11891,7 @@ public class client extends RSApplet {
 		aClass19_1179 = new NodeList();
 		anInt1184 = 128;
 		invOverlayInterfaceID = -1;
-		stream = Stream.create();
+		stream = Buffer.create();
 		menuActionName = new String[500];
 		anIntArray1203 = new int[5];
 		anIntArray1207 = new int[50];
@@ -11881,7 +11946,7 @@ public class client extends RSApplet {
 	private volatile boolean aBoolean831;
 	private Socket aSocket832;
 	private int loginScreenState;
-	private Stream aStream_834;
+	private Buffer aStream_834;
 	private NPC[] npcArray;
 	private int npcCount;
 	private int[] npcIndices;
@@ -11892,7 +11957,7 @@ public class client extends RSApplet {
 	private int anInt843;
 	private String aString844;
 	private int privateChatMode;
-	private Stream aStream_847;
+	private Buffer aStream_847;
 	private boolean aBoolean848;
 	private static int anInt849;
 	private int[] anIntArray850;
@@ -11931,7 +11996,7 @@ public class client extends RSApplet {
 	private int[] playerIndices;
 	private int anInt893;
 	private int[] anIntArray894;
-	private Stream[] aStreamArray895s;
+	private Buffer[] aStreamArray895s;
 	private int anInt896;
 	private int anInt897;
 	private int friendsCount;
@@ -12108,7 +12173,7 @@ public class client extends RSApplet {
 	private int anInt1079;
 	private boolean aBoolean1080;
 	private String[] friendsList;
-	private Stream inStream;
+	private Buffer inStream;
 	private int anInt1084;
 	private int anInt1085;
 	private int activeInterfaceType;
@@ -12214,7 +12279,7 @@ public class client extends RSApplet {
 	private int invOverlayInterfaceID;
 	private int[] anIntArray1190;
 	private int[] anIntArray1191;
-	private Stream stream;
+	private Buffer stream;
 	private int anInt1193;
 	private int splitPrivateChat;
 	private Background mapBack;

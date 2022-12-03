@@ -6,7 +6,7 @@ public final class IDK {
 
 	public static void unpackConfig(StreamLoader streamLoader)
 	{
-		Stream stream = new Stream(streamLoader.getDataForName("idk.dat"));
+		Buffer stream = new Buffer(streamLoader.getDataForName("idk.dat"));
 		length = stream.readUnsignedWord();
 		if(cache == null)
 			cache = new IDK[length];
@@ -18,7 +18,7 @@ public final class IDK {
 		}
 	}
 
-	private void readValues(Stream stream)
+	private void readValues(Buffer stream)
 	{
 		do
 		{

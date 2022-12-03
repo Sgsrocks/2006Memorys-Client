@@ -27,8 +27,8 @@ public final class ItemDef {
 	}
 
 	public static void unpackConfig(StreamLoader streamLoader)	 {
-		stream = new Stream(streamLoader.getDataForName("obj.dat"));
-		Stream stream = new Stream(streamLoader.getDataForName("obj.idx"));
+		stream = new Buffer(streamLoader.getDataForName("obj.dat"));
+		Buffer stream = new Buffer(streamLoader.getDataForName("obj.idx"));
 		totalItems = stream.readUnsignedWord();
 		streamIndices = new int[totalItems + 15000];
 		int i = 2;
@@ -237,8 +237,8 @@ public final class ItemDef {
 		membersObject = itemDef_1.membersObject;
 		value = itemDef_1.value;
 		String s = "a";
-		char c = itemDef_1.name.charAt(0);
-		if(c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U')
+//		char c = itemDef_1.name.charAt(0);
+	//	if(c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U')
 			s = "an";
 		description = ("Swap this note at any bank for " + s + " " + itemDef_1.name + ".").getBytes();
 		stackable = true;
@@ -402,7 +402,7 @@ public final class ItemDef {
 		return model;
 	}
 
-	public void readValues(Stream stream) {
+	public void readValues(Buffer stream) {
 		do {
 			int i = stream.readUnsignedByte();
 			if(i == 0)
@@ -534,7 +534,7 @@ public final class ItemDef {
 	public static int cacheIndex;
 	public int modelZoom;
 	public static boolean isMembers = true;
-	public static Stream stream;
+	public static Buffer stream;
 	public int anInt184;
 	public int anInt185;
 	public int maleEquip2;

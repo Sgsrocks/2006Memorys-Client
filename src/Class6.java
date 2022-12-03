@@ -218,7 +218,7 @@ final class Class6
 			return 0;
 	}
 
-	public void method169(Stream stream)
+	public void method169(Buffer stream)
 	{
 		aClass29_98 = new Class29();
 		aClass29_98.method325(stream);
@@ -257,7 +257,7 @@ final class Class6
 			if(k == 0)
 				break;
 			anIntArray106[j] = k;
-			anIntArray107[j] = stream.method421();
+			anIntArray107[j] = stream.readSmart();
 			anIntArray108[j] = stream.method422();
 		}
 

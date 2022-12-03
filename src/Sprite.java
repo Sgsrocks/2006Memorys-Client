@@ -5,9 +5,6 @@
 import sign.signlink;
 import java.awt.*;
 import java.awt.image.PixelGrabber;
-import java.awt.image.*;
-import javax.imageio.*;
-import java.io.*;
 
 public final class Sprite extends DrawingArea {
 
@@ -113,8 +110,8 @@ public final class Sprite extends DrawingArea {
 
 	public Sprite(StreamLoader streamLoader, String s, int i)
 	{
-		Stream stream = new Stream(streamLoader.getDataForName(s + ".dat"));
-		Stream stream_1 = new Stream(streamLoader.getDataForName("index.dat"));
+		Buffer stream = new Buffer(streamLoader.getDataForName(s + ".dat"));
+		Buffer stream_1 = new Buffer(streamLoader.getDataForName("index.dat"));
 		stream_1.currentOffset = stream.readUnsignedWord();
 		anInt1444 = stream_1.readUnsignedWord();
 		anInt1445 = stream_1.readUnsignedWord();

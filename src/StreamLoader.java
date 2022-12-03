@@ -6,7 +6,7 @@ final class StreamLoader {
 
 	public StreamLoader(byte abyte0[])
 	{
-			   Stream stream = new Stream(abyte0);
+			   Buffer stream = new Buffer(abyte0);
 		int i = stream.read3Bytes();
 		int j = stream.read3Bytes();
 		if(j != i)
@@ -14,7 +14,7 @@ final class StreamLoader {
 			byte abyte1[] = new byte[i];
 			Class13.method225(abyte1, i, abyte0, j, 6);
 			aByteArray726 = abyte1;
-			stream = new Stream(aByteArray726);
+			stream = new Buffer(aByteArray726);
 			aBoolean732 = true;
 		} else
 		{

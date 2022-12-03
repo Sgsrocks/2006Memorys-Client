@@ -6,7 +6,7 @@ public final class  Varp {
 
 	public static void unpackConfig(StreamLoader streamLoader)
 	{
-		Stream stream = new Stream(streamLoader.getDataForName("varp.dat"));
+		Buffer stream = new Buffer(streamLoader.getDataForName("varp.dat"));
 		anInt702 = 0;
 		int cacheSize = stream.readUnsignedWord();
 		if(cache == null)
@@ -23,7 +23,7 @@ public final class  Varp {
 			System.out.println("varptype load mismatch");
 	}
 
-	private void readValues(Stream stream, int i)
+	private void readValues(Buffer stream, int i)
 	{
 		do
 		{

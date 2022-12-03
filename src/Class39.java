@@ -65,7 +65,7 @@ final class Class39
 		return anIntArray665[i] * 2;
 	}
 
-	public void method545(Stream stream, Class29 class29)
+	public void method545(Buffer stream, Class29 class29)
 	{
 		int i = stream.readUnsignedByte();
 		anIntArray665[0] = i >> 4;
